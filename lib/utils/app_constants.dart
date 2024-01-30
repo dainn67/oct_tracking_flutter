@@ -3,10 +3,10 @@ import '../data/model/language_model.dart';
 import 'images.dart';
 
 class AppConstants {
-  static const String APP_NAME = 'Base';
+  static const String APP_NAME = 'Tracking';
   static const String APP_VERSION = "1.0.0";
 
-  static const String BASE_URL = 'http://android-tracking.oceantech.com.vn';
+  static const String BASE_URL = 'http://timesheet-dev.oceantech.com.vn';
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
   static const String STORE_ITEM_URI = '/api/v1/items/latest';
@@ -17,14 +17,16 @@ class AppConstants {
   static const String CATEGORY_ITEM_URI = '/api/v1/categories/items/';
   static const String CATEGORY_STORE_URI = '/api/v1/categories/stores/';
   static const String CONFIG_URI = '/mita/public/config-app';
-  static const String LOGIN_URI = '/mita/oauth/token';
+  static const String LOGIN_URI = '/timesheet/oauth/token';
   static const String SIGN_UP = '/mita/public/sign';
   static const String LOG_OUT = '/mita/oauth/logout';
   static const String GET_USER = '/mita/users/get-user-current';
+  static const String CHECK_TOKEN = '/timesheet/oauth/check_token';
   static const String GET_ALLOCATION_VOUCHERS = '/asvn/api/v1/instruments-and-tools/allocation-vouchers/page?pageIndex=1&pageSize=10';
+
   // Shared Key
   static const String THEME = '6ammart_theme';
-  static const String TOKEN = '6ammart_token';
+  static const String TOKEN = 'access_tokennn';
   static const String COUNTRY_CODE = '6ammart_country_code';
   static const String LANGUAGE_CODE = '6ammart_language_code';
   static const String CART_LIST = '6ammart_cart_list';
@@ -36,6 +38,7 @@ class AppConstants {
   static const String SEARCH_HISTORY = '6ammart_search_history';
   static const String INTRO = '6ammart_intro';
   static const String NOTIFICATION_COUNT = '6ammart_notification_count';
+  static const String ACCESS_TOKEN = 'access_token';
 
   static const String TOPIC = 'all_zone_customer';
   static const String ZONE_ID = 'zoneId';

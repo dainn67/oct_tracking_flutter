@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as Http;
@@ -20,18 +21,12 @@ class ApiClient extends GetxService {
   String token = "";
   Map<String, String> _mainHeaders = {};
 
+  //Constructor
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
-    token = sharedPreferences.getString(AppConstants.TOKEN) ??
-        "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
-    if (Foundation.kDebugMode) {
-      print('Token: $token');
-    }
-    updateHeader(
-      token,
-      null,
-      sharedPreferences.getString(AppConstants.LANGUAGE_CODE),
-      0,
-    );
+    token = sharedPreferences.getString(AppConstants.TOKEN) ?? "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
+    if (Foundation.kDebugMode) print('Token: $token');
+
+    updateHeader(token,null,sharedPreferences.getString(AppConstants.LANGUAGE_CODE),0,);
   }
 
   void updateHeader(
@@ -46,11 +41,10 @@ class ApiClient extends GetxService {
     _mainHeaders = _header;
   }
 
-  Future<Response> getData(String uri,
-      {Map<String, dynamic>? query, Map<String, String>? headers}) async {
+  Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
-        print('====> API Call: $uri\nHeader: $_mainHeaders');
+        print('====> API Call: ${appBaseUrl + uri}\nHeader: $_mainHeaders');
       }
       Http.Response _response = await Http.get(
         Uri.parse(appBaseUrl + uri).replace(queryParameters: query),
@@ -63,34 +57,18 @@ class ApiClient extends GetxService {
     }
   }
 
-  Future<Response> postData(String uri, dynamic body,
-      Map<String, String>? headers) async {
+
+  Future<Response> postData(String uri, dynamic body,Map<String, String>? headers) async {
     try {
       String requestBody = jsonEncode(body);
       if (Foundation.kDebugMode) {
-        print('====> API Call: $uri\nHeader: $_mainHeaders');
+        print('====> API Call: ${appBaseUrl + uri}');
+        print('====> Header: $headers');
         print('====> API Body: $requestBody');
       }
       Http.Response _response = await Http.post(
         Uri.parse(appBaseUrl + uri),
-        body: body,
-        headers: _mainHeaders,
-      ).timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(_response, uri);
-    } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-  Future<Response> postDataLogin(String uri, dynamic body,
-      Map<String, String>? headers) async {
-    try {
-      if (Foundation.kDebugMode) {
-        print('====> API Call: $uri\nHeader: ${headers ?? _mainHeaders}');
-        print('====> API Body: $body');
-      }
-      Http.Response _response = await Http.post(
-        Uri.parse(appBaseUrl + uri),
-        body: body,
+        body: requestBody,
         headers: headers,
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);
@@ -99,9 +77,45 @@ class ApiClient extends GetxService {
     }
   }
 
-  Future<Response> postMultipartData(
-      String uri, Map<String, String> body, List<MultipartBody> multipartBody,
-      {required Map<String, String>? headers}) async {
+
+  Future<Response> postDataLogin(String uri, dynamic body, Map<String, String>? headers) async {
+    try {
+      if (Foundation.kDebugMode) {
+        print('====> API Call: ${appBaseUrl + uri}\nHeader: ${headers ?? _mainHeaders}');
+        print('====> API Body: $body');
+      }
+      Http.Response _response = await Http.post(
+        Uri.parse(appBaseUrl + uri),
+        body: body,
+        headers: headers,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+
+  Future<Response> postCheckDataLogin(String path, String token, Map<String, String>? headers) async {
+    try {
+      Uri uriWithTokenParam = Uri.parse(appBaseUrl + path).replace(queryParameters: {'token': token});
+      if (kDebugMode) print('====> API Call: $uriWithTokenParam\nHeader: ${headers ?? _mainHeaders}');
+
+      Http.Response response = await Http.post(
+        uriWithTokenParam,
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+
+      return handleResponse(response, path);
+    } catch (e) {
+      if(kDebugMode) print('### Check login error: $e');
+      return Response(statusCode: 404, statusText: noInternetMessage);
+    }
+  }
+
+
+  Future<Response> postMultipartData(String uri, Map<String, String> body, List<MultipartBody> multipartBody,{required Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
         print('====> API Call: $uri\nHeader: $_mainHeaders');
@@ -130,8 +144,8 @@ class ApiClient extends GetxService {
     }
   }
 
-  Future<Response> putData(String uri, dynamic body,
-      {required Map<String, String> headers}) async {
+
+  Future<Response> putData(String uri, dynamic body,{required Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
         print('====> API Call: $uri\nHeader: $_mainHeaders');
@@ -148,11 +162,11 @@ class ApiClient extends GetxService {
     }
   }
 
-  Future<Response> deleteData(String uri,
-      {Map<String, String>? headers}) async {
+
+  Future<Response> deleteData(String uri, {Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
-        print('====> API Call: $uri\nHeader: $_mainHeaders');
+        print('====> API Call: ${appBaseUrl + uri}\nHeader: $_mainHeaders');
       }
       Http.Response _response = await Http.delete(
         Uri.parse(appBaseUrl + uri),
@@ -164,13 +178,15 @@ class ApiClient extends GetxService {
     }
   }
 
+
   Response handleResponse(Http.Response response, String uri) {
-    dynamic _body;
+    dynamic body;
     try {
-      _body = jsonDecode(response.body);
+      body = jsonDecode(response.body);
     } catch (e) {}
+
     Response _response = Response(
-      body: _body ?? response.body,
+      body: body ?? response.body,
       bodyString: response.body.toString(),
       request: Request(
           headers: response.request!.headers,
@@ -180,9 +196,11 @@ class ApiClient extends GetxService {
       statusCode: response.statusCode,
       statusText: response.reasonPhrase,
     );
+
     if (_response.statusCode != 200 &&
         _response.body != null &&
         _response.body is! String) {
+
       if (_response.body.toString().startsWith('{errors: [{code:')) {
         ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
         _response = Response(
@@ -198,10 +216,9 @@ class ApiClient extends GetxService {
     } else if (_response.statusCode != 200 && _response.body == null) {
       _response = Response(statusCode: 0, statusText: noInternetMessage);
     }
-    if (Foundation.kDebugMode) {
-      print(
-          '====> API Response: [${_response.statusCode}] $uri\n${_response.body}');
-    }
+
+    if (kDebugMode) print('<==== API Response: [${_response.statusCode}] $uri\n${_response.body}');
+
     return _response;
   }
 }

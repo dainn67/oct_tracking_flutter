@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timesheet/data/model/body/role.dart';
 import 'package:timesheet/data/model/body/token_request.dart';
-import 'package:timesheet/data/model/body/user.dart';
 
 import '../../utils/app_constants.dart';
 import '../api/api_client.dart';
@@ -16,17 +12,28 @@ class AuthRepo {
 
   AuthRepo({required this.apiClient, required this.sharedPreferences});
 
+  void init(){
+    var authorization = "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
+    var languageCode = sharedPreferences.getString(AppConstants.LANGUAGE_CODE);
+    Map<String, String> header = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      AppConstants.LOCALIZATION_KEY: languageCode ?? AppConstants.languages[0].languageCode,
+      'Authorization': authorization
+    };
+  }
+
   Future<Response> login(
       {required String username, required String password}) async {
+
     //header login
-    var token = "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
+    var authorization = "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
     var languageCode = sharedPreferences.getString(AppConstants.LANGUAGE_CODE);
-    Map<String, String> _header = {
+    Map<String, String> header = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      AppConstants.LOCALIZATION_KEY:
-          languageCode ?? AppConstants.languages[0].languageCode,
-      'Authorization': '$token'
+      AppConstants.LOCALIZATION_KEY: languageCode ?? AppConstants.languages[0].languageCode,
+      'Authorization': authorization
     };
+
     //call api login
     return await apiClient.postDataLogin(
         AppConstants.LOGIN_URI,
@@ -36,7 +43,7 @@ class AuthRepo {
                 clientId: "core_client",
                 clientSecret: "secret",
                 grantType: "password")
-            .toJson(),_header);
+            .toJson(),header);
   }
 
   Future<Response> logOut() async {
@@ -47,27 +54,27 @@ class AuthRepo {
     return await apiClient.getData(AppConstants.GET_USER);
   }
 
+  Future<Response> checkToken() async {
+    var authorization = "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
+    var languageCode = sharedPreferences.getString(AppConstants.LANGUAGE_CODE);
+    var token = sharedPreferences.getString(AppConstants.TOKEN) ?? '@';
 
-  Future<String> _saveDeviceToken() async {
-    String? _deviceToken = '@';
-    if (!GetPlatform.isWeb) {
-      try {
-        _deviceToken = await FirebaseMessaging.instance.getToken();
-      } catch (e) {}
-    }
-    if (_deviceToken != null) {
-      print('--------Device Token---------- ' + _deviceToken);
-    }
-    return _deviceToken!;
+    Map<String, String> header = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      AppConstants.LOCALIZATION_KEY: languageCode ?? AppConstants.languages[0].languageCode,
+      'Authorization': authorization
+    };
+
+    return await apiClient.postCheckDataLogin(AppConstants.CHECK_TOKEN, token, header);
   }
 
-  // for  user token
+  // for user token
   Future<bool> saveUserToken(String token) async {
     apiClient.token = "Bearer $token";
     apiClient.updateHeader("Bearer $token", null,
         sharedPreferences.getString(AppConstants.LANGUAGE_CODE) ?? "vi", 0);
     return await sharedPreferences.setString(
-        AppConstants.TOKEN, "Bearer $token");
+        AppConstants.TOKEN, token);
   }
   Future<bool> clearUserToken() async {
     return await sharedPreferences.remove(AppConstants.TOKEN);

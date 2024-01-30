@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         bool isNotConnected = result != ConnectivityResult.wifi &&
             result != ConnectivityResult.mobile;
         isNotConnected
-            ? SizedBox()
+            ? const SizedBox()
             : ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
@@ -79,16 +79,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _route() {
-    Get.find<AuthController>().getCurrentUser().then((value) => {
-          if (value == 200)
-            {
+    Get.find<AuthController>().checkToken().then((value) => {
+    print('getCurrentUser value: $value'),
+          if (value == 200){
               Get.to(const HomeScreen(),
                   transition: Transition.size,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.easeIn)
-            }
-          else
-            {Get.offNamed(RouteHelper.signIn)}
+          } else {
+            Get.offNamed(RouteHelper.signIn)
+          }
+
         });
   }
 }

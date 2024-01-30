@@ -4,7 +4,7 @@ class TokenResponsive {
   String? refreshToken;
   int? expiresIn;
   String? scope;
-  String? organization;
+  String? jti;
 
   TokenResponsive(
       {this.accessToken,
@@ -12,7 +12,7 @@ class TokenResponsive {
       this.refreshToken,
       this.expiresIn,
       this.scope,
-      this.organization});
+      this.jti});
 
   TokenResponsive.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
@@ -20,17 +20,17 @@ class TokenResponsive {
     refreshToken = json['refresh_token'];
     expiresIn = json['expires_in'];
     scope = json['scope'];
-    organization = json['organization'];
+    jti = json['jti'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access_token'] = this.accessToken;
-    data['token_type'] = this.tokenType;
-    data['refresh_token'] = this.refreshToken;
-    data['expires_in'] = this.expiresIn;
-    data['scope'] = this.scope;
-    data['organization'] = this.organization;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access_token'] = accessToken;
+    data['token_type'] = tokenType;
+    data['refresh_token'] = refreshToken;
+    data['expires_in'] = expiresIn;
+    data['scope'] = scope;
+    data['jti'] = jti;
     return data;
   }
 }
