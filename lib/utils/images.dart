@@ -1,5 +1,5 @@
 class Images {
-  static const String logo = 'assets/image/logo_login.jpg';
+  static const String logo = 'assets/image/oct.png';
   static const String placeholder = 'assets/image/placeholder.jpg';
   static const String vietnam = 'assets/image/vietnam.png';
   static const String call = 'assets/image/call.png';
@@ -13,8 +13,6 @@ class Images {
   static const String onboard_2 = 'assets/image/img_2.png';
   static const String background_sign_in = 'assets/image/img_3.png';
   static const String icon_notification = 'assets/image/img_5.png';
-
-
 
 
   static const String restaurant_marker = 'assets/image/restaurant_marker.png';
