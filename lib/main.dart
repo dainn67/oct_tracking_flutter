@@ -45,11 +45,16 @@ Future<void> main() async {
       await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
       FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
-  } catch (e) {}
+  } catch (e) {
+    print('ERROR: $e');
+  }
 
-  Map<String, Map<String, String>> _languages = await di.init();
+  print('INITING');
 
-  runApp(MyApp(languages: _languages));
+  Map<String, Map<String, String>> languages = await di.init();
+
+  print('INITING6.');
+  runApp(MyApp(languages: languages));
 }
 
 class MyApp extends StatelessWidget {

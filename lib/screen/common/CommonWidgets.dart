@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'CommonFunction.dart';
-
 AppBar buildAppBar(String title) {
   return AppBar(
     iconTheme: const IconThemeData(color: Colors.black),
@@ -25,16 +23,11 @@ AppBar buildAppBar(String title) {
 }
 
 Widget reusableText(String text) {
-  return Container(
-    margin: const EdgeInsets.only(bottom: 5),
-    child: Expanded(
-      child: Text(text,
-          style: TextStyle(
-              color: Colors.grey.withOpacity(0.8),
-              fontWeight: FontWeight.normal,
-              fontSize: 14)),
-    ),
-  );
+  return Text(text,
+      style: TextStyle(
+          color: Colors.grey.withOpacity(0.8),
+          fontWeight: FontWeight.normal,
+          fontSize: 14));
 }
 
 

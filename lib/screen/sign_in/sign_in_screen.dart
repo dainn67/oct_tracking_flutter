@@ -51,8 +51,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ),
                                   buildTextField(
                                       context,
-                                      "Enter your email",
-                                      "emailSignIn",
+                                      "Enter username",
+                                      "username",
                                       Images.user,
                                       _usernameController),
                                   Padding(
@@ -61,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ),
                                   buildTextField(
                                       context,
-                                      "Enter your password",
+                                      "Enter password",
                                       "password",
                                       Images.lock,
                                       _passwordController),
@@ -97,22 +97,16 @@ class _SignInScreenState extends State<SignInScreen> {
     } else {
       Get.find<AuthController>().login(username, password).then((value) => {
             if (value == 200)
-              {
                 Get.to(const HomeScreen(),
                     transition: Transition.size,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn)
-              }
             else if (value == 400)
-              {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Incorrect account or password")))
-              }
             else
-              {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("An error happened. Please try again")))
-              },
+                    content: Text("An error happened. Please try again"))),
           });
     }
   }
@@ -143,9 +137,9 @@ class _SignInScreenState extends State<SignInScreen> {
               onChanged: (value) {},
               obscureText: type == "password",
               decoration: InputDecoration(
-                  // errorText: ,
                   hintText: hint,
                   hintStyle: const TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
                   enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.transparent))),
             ),
@@ -182,7 +176,7 @@ class _SignInScreenState extends State<SignInScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(
               type == 'signin' || type == 'signup'
                   ? Colors.lightBlueAccent
-                  : Colors.white),
+                  : Colors.white54),
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           ),

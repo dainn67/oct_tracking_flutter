@@ -7,6 +7,7 @@ import '../widgets/drawer.dart';
 import 'start_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:timesheet/screen/home_screen_section_0.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -21,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const InstrumentAndTool(),
   ];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //RX variables, notify listeners to rebuild their UI whenever value change
   var index = 0.obs;
   var title = "home".obs;
 
@@ -48,30 +51,25 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: CustomDrawer(
         logOut: logOut,
         changePage: (p0) => changePage(p0),
-      ),
+      ) ,
     );
   }
 
   void logOut() {
-    Get.find<AuthController>().logOut().then((value) =>
-    {
-      if(value == 200){
-        Get.offNamed(RouteHelper.signIn)
-      }
-      else
-        {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Đã có lỗi xảy ra vui lòng thử lại")))
-        }
-    });
+    Get.find<AuthController>().logOut().then((value) => {
+          if (value == 200)
+            Get.offNamed(RouteHelper.signIn)
+          else
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text("Logged out")))
+        });
   }
 
   void getUser() {
-    Get.find<AuthController>().getCurrentUser().then((value) =>
-    {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("$value")))
-    });
+    Get.find<AuthController>().getCurrentUser().then((value) => {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("$value")))
+        });
   }
 
   void changePage(String s) {
@@ -92,13 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
         body: _currentIndex == 0
             ? HomeScreenSection0()
             : _currentIndex == 1
-            ? HomeScreenSection0()
-            : HomeScreenSection0(),
+                ? HomeScreenSection0()
+                : HomeScreenSection0(),
         bottomNavigationBar: SalomonBottomBar(
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           items: [
-
             /// Home
             SalomonBottomBarItem(
               icon: Icon(Icons.home),

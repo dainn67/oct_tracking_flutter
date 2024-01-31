@@ -84,13 +84,13 @@ class ApiClient extends GetxService {
         print('====> API Call: ${appBaseUrl + uri}\nHeader: ${headers ?? _mainHeaders}');
         print('====> API Body: $body');
       }
-      Http.Response _response = await Http.post(
+      Http.Response response = await Http.post(
         Uri.parse(appBaseUrl + uri),
         body: body,
         headers: headers,
       ).timeout(Duration(seconds: timeoutInSeconds));
 
-      return handleResponse(_response, uri);
+      return handleResponse(response, uri);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);
     }

@@ -16,7 +16,7 @@ class CustomDrawer extends StatefulWidget {
   State<StatefulWidget> createState() => DrawerState();
 }
 
-class DrawerState extends State<CustomDrawer>{
+class DrawerState extends State<CustomDrawer> {
   DrawerState();
 
   // var showCCDC = false.obs;
@@ -31,6 +31,8 @@ class DrawerState extends State<CustomDrawer>{
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
+
+          //header
           DrawerHeader(
             decoration: const BoxDecoration(color: Color(0xff5f62a1)),
             child: Column(
@@ -38,14 +40,14 @@ class DrawerState extends State<CustomDrawer>{
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'AMMIS',
+                    'Tracking',
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.grey.shade200,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(height: 24,),
+                const SizedBox(height: 10),
                 Center(
                   child: Column(
                     children: [
@@ -55,13 +57,14 @@ class DrawerState extends State<CustomDrawer>{
                         size: 60,
                       ),
                       GetBuilder<AuthController>(
-                        builder: (controller) => Text(
-                          controller.user.displayName ?? "",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey.shade200,
-                              fontWeight: FontWeight.normal),
-                        ),
+                        builder: (controller) =>
+                            Text(
+                              controller.user.displayName ?? "Admin",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey.shade200,
+                                  fontWeight: FontWeight.normal),
+                            ),
                       ),
                     ],
                   ),
@@ -69,48 +72,21 @@ class DrawerState extends State<CustomDrawer>{
               ],
             ),
           ),
+
+          //Options
           ListTile(
             leading: const Icon(
               Icons.grid_view_rounded,
               color: Colors.white,
             ),
             title: Text(
-              'home'.tr,
+              'Tracking'.tr,
               style: const TextStyle(color: Colors.white),
             ),
             onTap: () {
               widget.changePage('home');
             },
           ),
-          // ExpansionTile(
-          //   onExpansionChanged: (isExpand){
-          //     showCCDC.value = isExpand;
-          //   },
-          //   leading: const Icon(Icons.credit_card_rounded,color: Colors.white,),
-          //   title: const Text('Quản lý CCDC',style: TextStyle(color: Colors.white),),
-          //   trailing: Obx(() => showCCDC.value ? const Icon(Icons.arrow_drop_down_outlined,size: 30,color: Colors.white,): const Icon(Icons.arrow_right_outlined,size: 30,color: Colors.white,),),
-          //   children: [
-          //     Container(
-          //       color: const Color(0xff5f62a1),
-          //       child: ListView.builder(
-          //         itemBuilder: (context, index) {
-          //           return ItemListTile(
-          //             title: listCCDC()[index],
-          //             index: index,
-          //             onClickItem: () {
-          //               onItemClick(listCCDC()[index]);
-          //             },
-          //           );
-          //         },
-          //         itemCount: listCCDC().length,
-          //         shrinkWrap: true,
-          //         scrollDirection: Axis.vertical,
-          //         padding: const EdgeInsets.only(top: 0),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // Container(height: 1,color: Colors.black),
           ListTile(
             title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,12 +108,13 @@ class DrawerState extends State<CustomDrawer>{
             ),
             onTap: () {
               _showPopupMenu(
-                  (index) => {
-                        Get.find<LocalizationController>().setLanguage(Locale(
-                          AppConstants.languages[index].languageCode,
-                          AppConstants.languages[index].countryCode,
-                        ))
-                      },
+                      (index) =>
+                  {
+                    Get.find<LocalizationController>().setLanguage(Locale(
+                      AppConstants.languages[index].languageCode,
+                      AppConstants.languages[index].countryCode,
+                    ))
+                  },
                   this.context);
             },
           ),
@@ -152,10 +129,13 @@ class DrawerState extends State<CustomDrawer>{
             ),
             onTap: () {},
           ),
+
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15), child: Divider()),
           ListTile(
             title: Text(
-              'information'.tr,
-              style: TextStyle(color: Colors.white),
+              'About us'.tr,
+              style: const TextStyle(color: Colors.white),
             ),
             leading: const Icon(
               Icons.info,
@@ -165,8 +145,8 @@ class DrawerState extends State<CustomDrawer>{
           ),
           ListTile(
             title: Text(
-              'logout'.tr,
-              style: TextStyle(color: Colors.white),
+              'Log out'.tr,
+              style: const TextStyle(color: Colors.white),
             ),
             leading: const Icon(
               Icons.exit_to_app,

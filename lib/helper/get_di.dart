@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -26,19 +27,23 @@ Future<Map<String, Map<String, String>>> init() async {
 
   Get.lazyPut(() => sharedPreferences);
   Get.lazyPut(() => firstCamera);
-  Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
+  Get.lazyPut(() => ApiClient(
+      appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
 
   // Repository
   Get.lazyPut(() => LanguageRepo());
-  Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(
+      () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   Get.lazyPut(() => SplashRepo(apiClient: Get.find()));
-  Get.lazyPut(() => CCDCRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(
+      () => CCDCRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   // Controller
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
   Get.lazyPut(() => SplashController(repo: Get.find()));
-  Get.lazyPut(() => AuthController(repo: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(
+      () => AuthController(repo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => CCDCController(repo: Get.find()));
 
   if (await Permission.location.isGranted) {
@@ -47,18 +52,28 @@ Future<Map<String, Map<String, String>>> init() async {
     Get.lazyPut(() => newLocalData);
   }
 
+  print('INIT DI');
+
   // Retrieving localized data
-  Map<String, Map<String, String>> _languages = Map();
+  Map<String, Map<String, String>> languages = {};
+
   for (LanguageModel languageModel in AppConstants.languages) {
+    if(kDebugMode) print('HERE: assets/language/${languageModel.languageCode}.json');
+
     String jsonStringValues = await rootBundle
         .loadString('assets/language/${languageModel.languageCode}.json');
-    Map<String, dynamic> _mappedJson = json.decode(jsonStringValues);
-    Map<String, String> _json = Map();
-    _mappedJson.forEach((key, value) {
+
+
+    Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
+    Map<String, String> _json = {};
+
+    mappedJson.forEach((key, value) {
       _json[key] = value.toString();
     });
-    _languages['${languageModel.languageCode}_${languageModel.countryCode}'] =
+    languages['${languageModel.languageCode}_${languageModel.countryCode}'] =
         _json;
   }
-  return _languages;
+
+  print('INIT DI: $languages');
+  return languages;
 }

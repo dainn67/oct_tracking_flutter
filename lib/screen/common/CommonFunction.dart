@@ -5,3 +5,7 @@ bool isEmailValid(String email) {
   // Use the hasMatch method to check if the email matches the pattern
   return emailRegex.hasMatch(email);
 }
+
+String getDisplayDateAndTime(DateTime selectedTime) {
+  return '${selectedTime.day}/${selectedTime.month}/${selectedTime.year}';
+}
