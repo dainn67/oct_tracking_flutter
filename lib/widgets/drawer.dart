@@ -59,7 +59,7 @@ class DrawerState extends State<CustomDrawer> {
                       GetBuilder<AuthController>(
                         builder: (controller) =>
                             Text(
-                              controller.user.displayName ?? "Admin",
+                              'Admin',
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey.shade200,

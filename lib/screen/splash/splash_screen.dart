@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/controller/auth_controller.dart';
+import 'package:timesheet/data/repository/auth_repo.dart';
 import 'package:timesheet/screen/home_screen.dart';
 
 import '../../controller/splash_controller.dart';
@@ -79,8 +81,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _route() {
+    Get.find<AuthRepo>().init();
     Get.find<AuthController>().checkToken().then((value) => {
-    print('getCurrentUser value: $value'),
+    if(kDebugMode) print('Check token value: $value'),
           if (value == 200){
               Get.to(const HomeScreen(),
                   transition: Transition.size,

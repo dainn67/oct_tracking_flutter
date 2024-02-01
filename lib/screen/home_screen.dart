@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<AuthController>().getCurrentUser();
+    // Get.find<AuthController>().getCurrentUser();
   }
 
   @override
@@ -62,13 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
           else
             ScaffoldMessenger.of(context)
                 .showSnackBar(const SnackBar(content: Text("Logged out")))
-        });
-  }
-
-  void getUser() {
-    Get.find<AuthController>().getCurrentUser().then((value) => {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("$value")))
         });
   }
 

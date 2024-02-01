@@ -19,6 +19,7 @@ class Images {
   static const String office_hour = 'assets/image/office_hour.png';
   static const String working = 'assets/image/working.png';
   static const String off = 'assets/image/off.png';
+  static const String idle = 'assets/image/idle.png';
   static const String overtime_hour = 'assets/image/overtime.png';
   static const String calendar = 'assets/image/calendar.png';
   static const String delivery_man_marker = 'assets/image/delivery_man_marker.png';

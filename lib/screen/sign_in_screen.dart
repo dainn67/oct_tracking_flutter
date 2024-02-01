@@ -205,24 +205,18 @@ class _SignInScreenState extends State<SignInScreen> {
     String username = _usernameController.text;
     String password = _passwordController.text;
     if (username.isEmpty || password.isEmpty) {
-      const snackBar = SnackBar(
-        content: Text('Bạn cần điền đầy đủ tài khoản mật khẩu.'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('You need to fill in all required fields')));
     } else {
       Get.find<AuthController>().login(username, password).then((value) => {
             if (value == 200)
-              {Get.offNamed(RouteHelper.main)}
+              Get.offNamed(RouteHelper.main)
             else if (value == 400)
-              {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Tài khoản mật khẩu không chính xác")))
-              }
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Incorrect account or password")))
             else
-              {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Đã xảy ra lỗi xin vui lòng thử lại")))
-              }
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Some error happened. Please try again")))
           });
     }
   }

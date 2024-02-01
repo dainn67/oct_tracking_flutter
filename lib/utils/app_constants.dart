@@ -18,6 +18,7 @@ class AppConstants {
   static const String CATEGORY_STORE_URI = '/api/v1/categories/stores/';
   static const String CONFIG_URI = '/mita/public/config-app';
   static const String LOGIN_URI = '/timesheet/oauth/token';
+  static const String TRACKING = '/timesheet/api/v1/reports/page';
   static const String SIGN_UP = '/mita/public/sign';
   static const String LOG_OUT = '/mita/oauth/logout';
   static const String GET_USER = '/mita/users/get-user-current';
@@ -26,7 +27,7 @@ class AppConstants {
 
   // Shared Key
   static const String THEME = '6ammart_theme';
-  static const String TOKEN = 'access_tokennn';
+  static const String TOKEN = 'access_token';
   static const String COUNTRY_CODE = '6ammart_country_code';
   static const String LANGUAGE_CODE = '6ammart_language_code';
   static const String CART_LIST = '6ammart_cart_list';
@@ -38,7 +39,6 @@ class AppConstants {
   static const String SEARCH_HISTORY = '6ammart_search_history';
   static const String INTRO = '6ammart_intro';
   static const String NOTIFICATION_COUNT = '6ammart_notification_count';
-  static const String ACCESS_TOKEN = 'access_token';
 
   static const String TOPIC = 'all_zone_customer';
   static const String ZONE_ID = 'zoneId';

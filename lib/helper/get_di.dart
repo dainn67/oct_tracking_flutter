@@ -9,8 +9,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timesheet/controller/auth_controller.dart';
 import 'package:timesheet/controller/ccdc_controller.dart';
+import 'package:timesheet/controller/traking_controller.dart';
 import 'package:timesheet/data/repository/ccdc_repo.dart';
 import 'package:timesheet/data/repository/splash_repo.dart';
+import 'package:timesheet/data/repository/tracking_repo.dart';
 import '../controller/localization_controller.dart';
 import '../controller/splash_controller.dart';
 import '../data/api/api_client.dart';
@@ -32,16 +34,16 @@ Future<Map<String, Map<String, String>>> init() async {
 
   // Repository
   Get.lazyPut(() => LanguageRepo());
-  Get.lazyPut(
-      () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-
+  Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => SplashRepo(apiClient: Get.find()));
-  Get.lazyPut(
-      () => CCDCRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(() => CCDCRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(() => TrackingRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+
   // Controller
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
   Get.lazyPut(() => SplashController(repo: Get.find()));
+  Get.lazyPut(() => TrackingController(repo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
       () => AuthController(repo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => CCDCController(repo: Get.find()));

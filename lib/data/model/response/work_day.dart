@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'Task.dart';
 
 class WorkingDay {
-  String createDate;
-  String createdBy;
-  String modifyDate;
-  String modifiedBy;
-  String id;
-  bool dayOff;
+  String? createDate;
+  String? createdBy;
+  String? modifyDate;
+  String? modifiedBy;
+  String? id;
+  bool? dayOff;
   String dateWorking;
-  Member member;
-  List<Task> tasks;
+  Member? member;
+  List<Task>? tasks;
 
   WorkingDay({
     required this.createDate,
@@ -25,21 +25,24 @@ class WorkingDay {
     required this.tasks,
   });
 
-  // factory WorkingDay.fromJson(Map<String, dynamic> _json) {
-  //   return WorkingDay(
-  //     createDate: _json['createDate'],
-  //     createdBy: _json['createdBy'],
-  //     modifyDate: _json['modifyDate'],
-  //     modifiedBy: _json['modifiedBy'],
-  //     id: _json['id'],
-  //     dayOff: _json['dayOff'],
-  //     dateWorking: _json['dateWorking'],
-  //     member: Member.fromJson(_json['member']),
-  //     tasks: (json.decode(_json['tasks'])).map((taskData) {
-  //       return Task.fromJson(taskData);
-  //     }).toList(),
-  //   );
-  // }
+  factory WorkingDay.fromJson(Map<String, dynamic> _json) {
+    print('DECODING: ${_json['tasks']}');
+    return WorkingDay(
+      createDate: _json['createDate'],
+      createdBy: _json['createdBy'],
+      modifyDate: _json['modifyDate'],
+      modifiedBy: _json['modifiedBy'],
+      id: _json['id'],
+      dayOff: _json['dayOff'],
+      dateWorking: _json['dateWorking'],
+      member: _json['member'] != null ? Member.fromJson(_json['member']) : null,
+      tasks: _json['tasks'] != null
+          ? (_json['tasks'] as List)
+              .map((taskJson) => Task.fromJson(taskJson))
+              .toList()
+          : null,
+    );
+  }
 }
 
 class Member {
@@ -77,25 +80,25 @@ class Member {
     required this.user,
   });
 
-  // factory Member.fromJson(Map<String, dynamic> json) {
-  //   return Member(
-  //     createDate: json['createDate'],
-  //     createdBy: json['createdBy'],
-  //     modifyDate: json['modifyDate'],
-  //     modifiedBy: json['modifiedBy'],
-  //     id: json['id'],
-  //     name: json['name'],
-  //     code: json['code'],
-  //     gender: json['gender'],
-  //     type: json['type'],
-  //     email: json['email'],
-  //     position: json['position'],
-  //     level: json['level'],
-  //     status: json['status'],
-  //     dateJoin: json['dateJoin'],
-  //     user: User.,
-  //   );
-  // }
+  factory Member.fromJson(Map<String, dynamic> json) {
+    return Member(
+      createDate: json['createDate'],
+      createdBy: json['createdBy'],
+      modifyDate: json['modifyDate'],
+      modifiedBy: json['modifiedBy'],
+      id: json['id'],
+      name: json['name'],
+      code: json['code'],
+      gender: json['gender'],
+      type: json['type'],
+      email: json['email'],
+      position: json['position'],
+      level: json['level'],
+      status: json['status'],
+      dateJoin: json['dateJoin'],
+      user: User.fromJson(json['user']),
+    );
+  }
 }
 
 class User {
@@ -104,14 +107,14 @@ class User {
   String modifyDate;
   String modifiedBy;
   int id;
-  String gender;
+  String? gender;
   String username;
   bool accountNonExpired;
   bool accountNonLocked;
   bool active;
   bool credentialsNonExpired;
   String email;
-  String phone;
+  String? phone;
   bool justCreated;
   int? lastLoginFailures;
   DateTime? lastLoginTime;
@@ -142,4 +145,34 @@ class User {
     required this.roles,
     required this.authorities,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      createDate: json['createDate'],
+      createdBy: json['createdBy'],
+      modifyDate: json['modifyDate'],
+      modifiedBy: json['modifiedBy'],
+      id: json['id'],
+      gender: json['gender'],
+      username: json['username'],
+      accountNonExpired: json['accountNonExpired'],
+      accountNonLocked: json['accountNonLocked'],
+      active: json['active'],
+      credentialsNonExpired: json['credentialsNonExpired'],
+      email: json['email'],
+      phone: json['phone'],
+      justCreated: json['justCreated'],
+      lastLoginFailures: json['lastLoginFailures'],
+      lastLoginTime: json['lastLoginTime'] != null
+          ? DateTime.parse(json['lastLoginTime'])
+          : null,
+      totalLoginFailures: json['totalLoginFailures'],
+      orgId: json['orgId'],
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      authorities: (json['authorities'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+  }
 }

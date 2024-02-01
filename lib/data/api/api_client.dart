@@ -23,10 +23,16 @@ class ApiClient extends GetxService {
 
   //Constructor
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
-    token = sharedPreferences.getString(AppConstants.TOKEN) ?? "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
+    token = sharedPreferences.getString(AppConstants.TOKEN) ??
+        "Basic Y29yZV9jbGllbnQ6c2VjcmV0";
     if (Foundation.kDebugMode) print('Token: $token');
 
-    updateHeader(token,null,sharedPreferences.getString(AppConstants.LANGUAGE_CODE),0,);
+    updateHeader(
+      token,
+      null,
+      sharedPreferences.getString(AppConstants.LANGUAGE_CODE),
+      0,
+    );
   }
 
   void updateHeader(
@@ -41,24 +47,39 @@ class ApiClient extends GetxService {
     _mainHeaders = _header;
   }
 
-  Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers}) async {
+  Future<Response> getData(
+      String uri,
+      {
+        Map<String, dynamic>? query,
+        Map<String, String>? headers,
+        String? accessToken
+      }) async {
     try {
       if (Foundation.kDebugMode) {
-        print('====> API Call: ${appBaseUrl + uri}\nHeader: $_mainHeaders');
+        if(kDebugMode) {
+          print('====> API Call: ${appBaseUrl + uri}');
+          print('Header: ${headers ?? _mainHeaders}');
+          if(query != null) {
+            print('Query: $query');
+            print('>> New uri: ${Uri.parse(appBaseUrl + uri).replace(queryParameters: query)}');
+          }
+        }
       }
-      Http.Response _response = await Http.get(
+      Http.Response response = await Http.get(
         Uri.parse(appBaseUrl + uri).replace(queryParameters: query),
         headers: headers ?? _mainHeaders,
+
       ).timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(_response, uri);
+
+      return handleResponse(response, uri);
     } catch (e) {
-      print('------------${e.toString()}');
+      if(kDebugMode) print('------------ERROR: $e');
       return Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
-
-  Future<Response> postData(String uri, dynamic body,Map<String, String>? headers) async {
+  Future<Response> postData(
+      String uri, dynamic body, Map<String, String>? headers) async {
     try {
       String requestBody = jsonEncode(body);
       if (Foundation.kDebugMode) {
@@ -77,11 +98,12 @@ class ApiClient extends GetxService {
     }
   }
 
-
-  Future<Response> postDataLogin(String uri, dynamic body, Map<String, String>? headers) async {
+  Future<Response> postDataLogin(
+      String uri, dynamic body, Map<String, String>? headers) async {
     try {
       if (Foundation.kDebugMode) {
-        print('====> API Call: ${appBaseUrl + uri}\nHeader: ${headers ?? _mainHeaders}');
+        print(
+            '====> API Call: ${appBaseUrl + uri}\nHeader: ${headers ?? _mainHeaders}');
         print('====> API Body: $body');
       }
       Http.Response response = await Http.post(
@@ -96,11 +118,14 @@ class ApiClient extends GetxService {
     }
   }
 
-
-  Future<Response> postCheckDataLogin(String path, String token, Map<String, String>? headers) async {
+  Future<Response> postCheckDataLogin(
+      String path, String token, Map<String, String>? headers) async {
     try {
-      Uri uriWithTokenParam = Uri.parse(appBaseUrl + path).replace(queryParameters: {'token': token});
-      if (kDebugMode) print('====> API Call: $uriWithTokenParam\nHeader: ${headers ?? _mainHeaders}');
+      Uri uriWithTokenParam = Uri.parse(appBaseUrl + path)
+          .replace(queryParameters: {'token': token});
+      if (kDebugMode)
+        print(
+            '====> API Call: $uriWithTokenParam\nHeader: ${headers ?? _mainHeaders}');
 
       Http.Response response = await Http.post(
         uriWithTokenParam,
@@ -109,13 +134,14 @@ class ApiClient extends GetxService {
 
       return handleResponse(response, path);
     } catch (e) {
-      if(kDebugMode) print('### Check login error: $e');
+      if (kDebugMode) print('### Check login error: $e');
       return Response(statusCode: 404, statusText: noInternetMessage);
     }
   }
 
-
-  Future<Response> postMultipartData(String uri, Map<String, String> body, List<MultipartBody> multipartBody,{required Map<String, String>? headers}) async {
+  Future<Response> postMultipartData(
+      String uri, Map<String, String> body, List<MultipartBody> multipartBody,
+      {required Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
         print('====> API Call: $uri\nHeader: $_mainHeaders');
@@ -144,8 +170,8 @@ class ApiClient extends GetxService {
     }
   }
 
-
-  Future<Response> putData(String uri, dynamic body,{required Map<String, String>? headers}) async {
+  Future<Response> putData(String uri, dynamic body,
+      {required Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
         print('====> API Call: $uri\nHeader: $_mainHeaders');
@@ -162,8 +188,8 @@ class ApiClient extends GetxService {
     }
   }
 
-
-  Future<Response> deleteData(String uri, {Map<String, String>? headers}) async {
+  Future<Response> deleteData(String uri,
+      {Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
         print('====> API Call: ${appBaseUrl + uri}\nHeader: $_mainHeaders');
@@ -178,48 +204,46 @@ class ApiClient extends GetxService {
     }
   }
 
-
-  Response handleResponse(Http.Response response, String uri) {
+  Response handleResponse(Http.Response receivedResponse, String uri) {
     dynamic body;
     try {
-      body = jsonDecode(response.body);
+      body = jsonDecode(receivedResponse.body);
     } catch (e) {}
 
-    Response _response = Response(
-      body: body ?? response.body,
-      bodyString: response.body.toString(),
+    Response response = Response(
+      body: body ?? receivedResponse.body,
+      bodyString: receivedResponse.body.toString(),
       request: Request(
-          headers: response.request!.headers,
-          method: response.request!.method,
-          url: response.request!.url),
-      headers: response.headers,
-      statusCode: response.statusCode,
-      statusText: response.reasonPhrase,
+          headers: receivedResponse.request!.headers,
+          method: receivedResponse.request!.method,
+          url: receivedResponse.request!.url),
+      headers: receivedResponse.headers,
+      statusCode: receivedResponse.statusCode,
+      statusText: receivedResponse.reasonPhrase,
     );
 
-    if (_response.statusCode != 200 &&
-        _response.body != null &&
-        _response.body is! String) {
-
-      if (_response.body.toString().startsWith('{errors: [{code:')) {
-        ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
-        _response = Response(
-            statusCode: _response.statusCode,
-            body: _response.body,
-            statusText: _errorResponse.errors![0].message);
-      } else if (_response.body.toString().startsWith('{message')) {
-        _response = Response(
-            statusCode: _response.statusCode,
-            body: _response.body,
-            statusText: _response.body['message']);
+    if (response.statusCode != 200 &&
+        response.body != null &&
+        response.body is! String) {
+      if (response.body.toString().startsWith('{errors: [{code:')) {
+        ErrorResponse errorResponse = ErrorResponse.fromJson(response.body);
+        response = Response(
+            statusCode: response.statusCode,
+            body: response.body,
+            statusText: errorResponse.errors![0].message);
+      } else if (response.body.toString().startsWith('{message')) {
+        response = Response(
+            statusCode: response.statusCode,
+            body: response.body,
+            statusText: response.body['message']);
       }
-    } else if (_response.statusCode != 200 && _response.body == null) {
-      _response = Response(statusCode: 0, statusText: noInternetMessage);
+    } else if (response.statusCode != 200 && response.body == null) {
+      response = Response(statusCode: 0, statusText: noInternetMessage);
     }
 
-    if (kDebugMode) print('<==== API Response: [${_response.statusCode}] $uri\n${_response.body}');
+    if (kDebugMode) print('<==== API Response: [${response.statusCode}] $uri \n ${response.body}');
 
-    return _response;
+    return response;
   }
 }
 
