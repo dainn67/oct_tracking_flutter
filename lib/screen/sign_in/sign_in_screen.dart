@@ -118,7 +118,9 @@ class _SignInScreenState extends State<SignInScreen> {
       height: 68,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Colors.black)),
+          color: Colors.grey.shade200
+          // border: Border.all(color: Colors.black)
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,7 +178,7 @@ class _SignInScreenState extends State<SignInScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(
               type == 'signin' || type == 'signup'
                   ? Colors.lightBlueAccent
-                  : Colors.white54),
+                  : Colors.blueAccent),
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           ),
@@ -187,12 +189,10 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Center(
             child: Text(
               name,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: type == 'signin' || type == 'signup'
-                      ? Colors.white
-                      : Colors.grey),
+                  color: Colors.white),
             ),
           ),
         ),
