@@ -192,13 +192,13 @@ class ApiClient extends GetxService {
       {Map<String, String>? headers}) async {
     try {
       if (Foundation.kDebugMode) {
-        print('====> API Call: ${appBaseUrl + uri}\nHeader: $_mainHeaders');
+        if(kDebugMode) print('====> API Call: ${appBaseUrl + uri}\nHeader: $_mainHeaders');
       }
-      Http.Response _response = await Http.delete(
+      Http.Response response = await Http.delete(
         Uri.parse(appBaseUrl + uri),
         headers: headers ?? _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(_response, uri);
+      return handleResponse(response, uri);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);
     }

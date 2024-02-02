@@ -210,14 +210,15 @@ class _StartScreenState extends State<StartScreen> {
                           child: GroupedListView<WorkingDay, String>(
                             elements: controller.workingDayList,
                             groupBy: (WorkingDay workingDay) =>
-                                workingDay.dateWorking,
+                              _getDisplayDate(workingDay.dateWorking),
+                              // (workingDay.dateWorking),
                             groupSeparatorBuilder: (String value) =>
                                 Wrap(children: [
                               Container(
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
+                                    borderRadius: BorderRadius.circular(5),
                                     color: _getCorrespondingDateColor(value)),
-                                padding: const EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.all(1.0),
                                 margin:
                                     const EdgeInsets.only(left: 10, top: 10),
                                 child: Text(
@@ -338,6 +339,11 @@ class _StartScreenState extends State<StartScreen> {
         ),
       ),
     );
+  }
+
+  _getDisplayDate(String date){
+    List<String> data = date.split('-').toList();
+    return '${data[2]}-${data[1]}-${data[0]}';
   }
 
   _getCorrespondingDateColor(String date){
