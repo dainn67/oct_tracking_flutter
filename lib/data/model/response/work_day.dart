@@ -9,7 +9,7 @@ class WorkingDay {
   String? modifiedBy;
   String? id;
   bool? dayOff;
-  String dateWorking;
+  String? dateWorking;
   Member? member;
   List<Task>? tasks;
 
@@ -25,19 +25,18 @@ class WorkingDay {
     required this.tasks,
   });
 
-  factory WorkingDay.fromJson(Map<String, dynamic> _json) {
-    print('DECODING: ${_json['tasks']}');
+  factory WorkingDay.fromJson(Map<String, dynamic> receivedJson) {
     return WorkingDay(
-      createDate: _json['createDate'],
-      createdBy: _json['createdBy'],
-      modifyDate: _json['modifyDate'],
-      modifiedBy: _json['modifiedBy'],
-      id: _json['id'],
-      dayOff: _json['dayOff'],
-      dateWorking: _json['dateWorking'],
-      member: _json['member'] != null ? Member.fromJson(_json['member']) : null,
-      tasks: _json['tasks'] != null
-          ? (_json['tasks'] as List)
+      createDate: receivedJson['createDate'],
+      createdBy: receivedJson['createdBy'],
+      modifyDate: receivedJson['modifyDate'],
+      modifiedBy: receivedJson['modifiedBy'],
+      id: receivedJson['id'],
+      dayOff: receivedJson['dayOff'],
+      dateWorking: receivedJson['dateWorking'],
+      member: receivedJson['member'] != null ? Member.fromJson(receivedJson['member']) : null,
+      tasks: receivedJson['tasks'] != null
+          ? (receivedJson['tasks'] as List)
               .map((taskJson) => Task.fromJson(taskJson))
               .toList()
           : null,

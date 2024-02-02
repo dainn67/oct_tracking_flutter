@@ -87,13 +87,10 @@ class TrackingTile extends StatelessWidget {
     );
   }
 
-  _getCorrespondingLeadingImage(){
-    return Image.asset(
-        workingDay.dayOff != null && workingDay.dayOff!
-            ? Images.off
-            : (workingDay.tasks != null
-            ? Images.working
-            : Images.idle));
+  _getCorrespondingLeadingImage() {
+    return Image.asset(workingDay.dayOff != null && workingDay.dayOff!
+        ? Images.off
+        : (workingDay.tasks != null ? Images.working : Images.idle));
   }
 
   _showDetail(BuildContext context) {

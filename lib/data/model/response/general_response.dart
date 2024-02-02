@@ -1,4 +1,7 @@
+import 'package:timesheet/data/model/response/team.dart';
 import 'package:timesheet/data/model/response/work_day.dart';
+
+import 'Task.dart';
 
 class ApiResponse {
   String timestamp;
@@ -27,7 +30,7 @@ class ApiResponse {
 }
 
 class ApiData {
-  List<WorkingDay> content;
+  List<dynamic> content;
   ApiPageable pageable;
   int totalPages;
   int totalElements;
@@ -54,10 +57,28 @@ class ApiData {
   });
 
   factory ApiData.fromJson(Map<String, dynamic> json) {
+    List<dynamic> content = [];
+    if(json['content'].toString().contains('dayOff')) {
+      content = (json['content'] as List)
+        .map((contentJson) => WorkingDay.fromJson(contentJson))
+        .toList();
+    } else if (json['content'].toString().contains('position')){
+      content = (json['content'] as List)
+          .map((contentJson) => Member.fromJson(contentJson))
+          .toList();
+    } else if (json['content'].toString().contains('members')){
+      content = (json['content'] as List)
+          .map((contentJson) => Team.fromJson(contentJson))
+          .toList();
+    } else {
+      content = (json['content'] as List)
+          .map((contentJson) => Project.fromJson(contentJson))
+          .toList();
+    }
+    // print('DECODING: ${json['content']}');
+
     return ApiData(
-      content: (json['content'] as List)
-          .map((contentJson) => WorkingDay.fromJson(contentJson))
-          .toList(),
+      content: content,
       pageable: ApiPageable.fromJson(json['pageable']),
       totalPages: json['totalPages'],
       totalElements: json['totalElements'],

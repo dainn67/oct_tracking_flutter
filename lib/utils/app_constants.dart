@@ -6,6 +6,7 @@ class AppConstants {
   static const String APP_NAME = 'Tracking';
   static const String APP_VERSION = "1.0.0";
 
+  // API paths
   static const String BASE_URL = 'http://timesheet-dev.oceantech.com.vn';
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
@@ -19,6 +20,9 @@ class AppConstants {
   static const String CONFIG_URI = '/mita/public/config-app';
   static const String LOGIN_URI = '/timesheet/oauth/token';
   static const String TRACKING = '/timesheet/api/v1/reports/page';
+  static const String MEMBER = '/timesheet/api/v1/members/page';
+  static const String TEAM = '/timesheet/api/v1/teams/page';
+  static const String PROJECT = '/timesheet/api/v1/projects/page';
   static const String SIGN_UP = '/mita/public/sign';
   static const String LOG_OUT = '/mita/oauth/logout';
   static const String GET_USER = '/mita/users/get-user-current';
@@ -70,6 +74,8 @@ class AppConstants {
 
   static const int BALANCE_INPUT_LEN = 10;
 
+  //Dropdown buttons options
+  static const List<int> pageSizes = [10, 20, 30, 50];
 
   // Delivery Tips
   static List<int> tips = [5000, 10000, 20000, 50000];

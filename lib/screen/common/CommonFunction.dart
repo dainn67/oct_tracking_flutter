@@ -7,5 +7,7 @@ bool isEmailValid(String email) {
 }
 
 String getDisplayDateAndTime(DateTime selectedTime) {
-  return '${selectedTime.day}/${selectedTime.month}/${selectedTime.year}';
+  final String displayDay = selectedTime.day < 10 ? '0${selectedTime.day}' : selectedTime.day.toString();
+  final String displayMonth = selectedTime.month < 10 ? '0${selectedTime.month}' : selectedTime.month.toString();
+  return '$displayDay-$displayMonth-${selectedTime.year}';
 }
