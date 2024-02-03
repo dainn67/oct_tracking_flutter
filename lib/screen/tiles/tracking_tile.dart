@@ -110,21 +110,20 @@ class TrackingTile extends StatelessWidget {
                       Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 10),
-                          margin: const EdgeInsets.only(bottom: 5),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          width: double.infinity,
+                          height: 50,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.lightBlueAccent),
-                          child: Text(
-                            workingDay.member!.name,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                          child: Center(
+                            child: Text(
+                              workingDay.member!.name,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           )),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: const Divider(),
-                      ),
                       Material(
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.55,

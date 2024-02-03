@@ -111,9 +111,8 @@ class TrackingController extends GetxController implements GetxService {
     _loading = true;
     update();
 
-    Response response;
     try {
-      response = await repo.getWorkingDayList(
+      Response response = await repo.getWorkingDayList(
           _fromDate, _toDate, _pageIndex, _pageSize, teamId: _selectedTeamId, memberId: _selectedMemberId);
       if (response.statusCode == 200) {
         ApiResponse apiResponse = ApiResponse.fromJson(response.body);

@@ -4,6 +4,7 @@ import 'package:timesheet/controller/localization_controller.dart';
 
 import '../controller/auth_controller.dart';
 import '../utils/app_constants.dart';
+import '../utils/images.dart';
 
 class CustomDrawer extends StatefulWidget {
   final VoidCallback logOut;
@@ -76,7 +77,7 @@ class DrawerState extends State<CustomDrawer> {
           //Options
           ListTile(
             leading: const Icon(
-              Icons.grid_view_rounded,
+              Icons.track_changes_rounded,
               color: Colors.white,
             ),
             title: Text(
@@ -87,6 +88,49 @@ class DrawerState extends State<CustomDrawer> {
               widget.changePage('home');
             },
           ),
+          ListTile(
+            title: Text(
+              'Project'.tr,
+              style: const TextStyle(color: Colors.white),
+            ),
+            leading: const Icon(
+              Icons.account_tree_rounded,
+              color: Colors.white,
+            ),
+            onTap: () {
+              widget.changePage('Project');
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Personnel'.tr,
+              style: const TextStyle(color: Colors.white),
+            ),
+            leading: const Icon(
+              Icons.group,
+              color: Colors.white,
+            ),
+            onTap: () {
+              widget.changePage('Personnel');
+            },
+          ),
+          ListTile(
+            title: Text(
+              'User'.tr,
+              style: const TextStyle(color: Colors.white),
+            ),
+            leading: const Icon(
+              Icons.supervised_user_circle_rounded,
+              color: Colors.white,
+            ),
+            onTap: () {
+              widget.changePage('User');
+            },
+          ),
+
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15), child: Divider()),
+
           ListTile(
             title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,20 +162,7 @@ class DrawerState extends State<CustomDrawer> {
                   this.context);
             },
           ),
-          ListTile(
-            title: Text(
-              'terms'.tr,
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: const Icon(
-              Icons.policy,
-              color: Colors.white,
-            ),
-            onTap: () {},
-          ),
 
-          const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15), child: Divider()),
           ListTile(
             title: Text(
               'About us'.tr,

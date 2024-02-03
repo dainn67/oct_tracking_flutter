@@ -9,9 +9,7 @@ class TrackingRepo {
   final SharedPreferences sharedPreferences;
 
   TrackingRepo({required this.apiClient, required this.sharedPreferences});
-  
-  bool loading = false;
-  
+
   Map<String, String> header = {};
   String authorization = '';
   String? languageCode = '';

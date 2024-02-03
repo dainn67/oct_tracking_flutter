@@ -30,6 +30,33 @@ Widget reusableText(String text) {
           fontSize: 14));
 }
 
-
-
+Widget buildButton(String name, String type, void Function()? func) {
+  return Container(
+    margin: const EdgeInsets.only(bottom: 10),
+    child: ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            type == 'signin' || type == 'signup'
+                ? Colors.lightBlueAccent
+                : Colors.blueAccent),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        ),
+      ),
+      onPressed: func,
+      child: SizedBox(
+        height: 50,
+        child: Center(
+          child: Text(
+            name,
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 

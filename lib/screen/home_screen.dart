@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/screen/instruments_and_tools_screen.dart';
+import 'package:timesheet/screen/project_screen.dart';
 import '../controller/auth_controller.dart';
 import '../helper/route_helper.dart';
 import '../widgets/drawer.dart';
@@ -16,8 +17,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Widget> listWidget = [
+  List<Widget> widgetList = [
     const StartScreen(),
+    const ProjectScreen(),
     const InstrumentAndTool(),
     const InstrumentAndTool(),
   ];
@@ -26,12 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //RX variables, notify listeners to rebuild their UI whenever value change
   var index = 0.obs;
   var title = "home".obs;
-
-  @override
-  void initState() {
-    super.initState();
-    // Get.find<AuthController>().getCurrentUser();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      body: Obx(() => listWidget[index.value]),
+      body: Obx(() => widgetList[index.value]),
       drawer: CustomDrawer(
         logOut: logOut,
         changePage: (p0) => changePage(p0),
-      ) ,
+      ),
     );
   }
 
@@ -69,56 +65,25 @@ class _HomeScreenState extends State<HomeScreen> {
     navigator?.pop(context);
     title.value = s.tr;
     switch (s) {
-      case "home":
-        index.value = 0;
-      case "Cấp phát CCDC":
+      case 'home':
+        {
+          index.value = 0;
+          break;
+        }
+      case 'Project':
         {
           index.value = 1;
+          break;
         }
-    }
-    var _currentIndex = 0;
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        body: _currentIndex == 0
-            ? HomeScreenSection0()
-            : _currentIndex == 1
-                ? HomeScreenSection0()
-                : HomeScreenSection0(),
-        bottomNavigationBar: SalomonBottomBar(
-          currentIndex: _currentIndex,
-          onTap: (i) => setState(() => _currentIndex = i),
-          items: [
-            /// Home
-            SalomonBottomBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Home"),
-              selectedColor: Colors.purple,
-            ),
-
-            /// Likes
-            SalomonBottomBarItem(
-              icon: Icon(Icons.favorite_border),
-              title: Text("Likes"),
-              selectedColor: Colors.pink,
-            ),
-
-            /// Search
-            SalomonBottomBarItem(
-              icon: Icon(Icons.search),
-              title: Text("Search"),
-              selectedColor: Colors.orange,
-            ),
-
-            /// Profile
-            SalomonBottomBarItem(
-              icon: Icon(Icons.person),
-              title: Text("Profile"),
-              selectedColor: Colors.teal,
-            ),
-          ],
-        ),
-      );
+      case 'Personnel':
+        {
+          index.value = 2;
+          break;
+        }
+      case 'User':
+        {
+          index.value = 3;
+        }
     }
   }
 }
