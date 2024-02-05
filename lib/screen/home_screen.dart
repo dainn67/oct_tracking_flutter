@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:timesheet/screen/instruments_and_tools_screen.dart';
-import 'package:timesheet/screen/project_screen.dart';
+import 'package:timesheet/screen/personnel/personnel_screen.dart';
+import 'package:timesheet/screen/project/project_screen.dart';
+import 'package:timesheet/screen/user/user_screen.dart';
 import '../controller/auth_controller.dart';
 import '../helper/route_helper.dart';
 import '../widgets/drawer.dart';
-import 'start_screen.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:timesheet/screen/home_screen_section_0.dart';
-
+import 'tracking/start_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -20,8 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> widgetList = [
     const StartScreen(),
     const ProjectScreen(),
-    const InstrumentAndTool(),
-    const InstrumentAndTool(),
+    const PersonnelScreen(),
+    const UserScreen(),
   ];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 

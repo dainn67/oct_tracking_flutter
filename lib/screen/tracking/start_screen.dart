@@ -5,8 +5,8 @@ import 'package:timesheet/controller/traking_controller.dart';
 import 'package:timesheet/screen/tiles/tracking_tile.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/utils/app_constants.dart';
-import '../data/model/response/work_day.dart';
-import 'common/CommonFunction.dart';
+import '../../data/model/response/work_day.dart';
+import '../common/CommonFunction.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});

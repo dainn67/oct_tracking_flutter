@@ -8,9 +8,8 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timesheet/controller/auth_controller.dart';
-import 'package:timesheet/controller/ccdc_controller.dart';
+import 'package:timesheet/controller/personnel_controller.dart';
 import 'package:timesheet/controller/traking_controller.dart';
-import 'package:timesheet/data/repository/ccdc_repo.dart';
 import 'package:timesheet/data/repository/project_repo.dart';
 import 'package:timesheet/data/repository/splash_repo.dart';
 import 'package:timesheet/data/repository/tracking_repo.dart';
@@ -21,6 +20,7 @@ import '../data/api/api_client.dart';
 import '../data/model/language_model.dart';
 import '../data/repository/auth_repo.dart';
 import '../data/repository/language_repo.dart';
+import '../data/repository/personnel_repo.dart';
 import '../theme/theme_controller.dart';
 import '../utils/app_constants.dart';
 
@@ -38,9 +38,9 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => LanguageRepo());
   Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => SplashRepo(apiClient: Get.find()));
-  Get.lazyPut(() => CCDCRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => TrackingRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => ProjectRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(() => PersonnelRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   // Controller
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
@@ -49,7 +49,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => TrackingController(repo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => ProjectController(repo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => AuthController(repo: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(() => CCDCController(repo: Get.find()));
+  Get.lazyPut(() => PersonnelController(repo: Get.find(), sharedPreferences: Get.find()));
 
   if (await Permission.location.isGranted) {
     final newLocalData = await Geolocator.getCurrentPosition(

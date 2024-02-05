@@ -2,7 +2,6 @@ import 'package:timesheet/data/api/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:timesheet/data/model/body/project_model.dart';
-import 'package:timesheet/data/model/body/token_request.dart';
 
 import '../../utils/app_constants.dart';
 

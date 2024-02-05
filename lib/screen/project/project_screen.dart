@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:timesheet/screen/tiles/project_detail.dart';
 import 'package:timesheet/screen/tiles/project_tile.dart';
 
-import '../controller/project_controller.dart';
-import '../utils/app_constants.dart';
+import '../../controller/project_controller.dart';
+import '../../utils/app_constants.dart';
 
 class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});

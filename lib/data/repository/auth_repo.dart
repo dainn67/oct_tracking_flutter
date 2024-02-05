@@ -13,8 +13,6 @@ class AuthRepo {
 
   AuthRepo({required this.apiClient, required this.sharedPreferences});
 
-  // bool isInit = false;
-
   Map<String, String> header = {};
   String authorization = '';
   String? languageCode = '';
@@ -28,8 +26,6 @@ class AuthRepo {
           languageCode ?? AppConstants.languages[0].languageCode,
       'Authorization': authorization
     };
-
-    // isInit = true;
   }
 
   Future<Response> login({required String username, required String password}) async {

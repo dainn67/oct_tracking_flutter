@@ -137,8 +137,9 @@ class Images {
   static const String slide_right_icon = 'assets/image/slide_right_icon.png';
 
   //other info
-  static const String male = 'assets/image/Male.png';
-  static const String female = 'assets/image/Female.png';
+  static const String male = 'assets/image/male.png';
+  static const String female = 'assets/image/female.png';
+  static const String lgbtq = 'assets/image/lgbtq.png';
   static const String other = 'assets/image/Other_gender.png';
 
 

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:timesheet/controller/localization_controller.dart';
-
 import '../controller/auth_controller.dart';
+import '../controller/localization_controller.dart';
 import '../utils/app_constants.dart';
-import '../utils/images.dart';
 
 class CustomDrawer extends StatefulWidget {
   final VoidCallback logOut;

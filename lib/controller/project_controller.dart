@@ -21,8 +21,8 @@ class ProjectController extends GetxController implements GetxService {
   String _selectedStatus = '';
 
   bool get loading => _loading;
-  int get pageIndex => _pageIndex;
 
+  int get pageIndex => _pageIndex;
   List<Project> get projectList => _projectList;
   set pageIndex(int newIndex) {
     _pageIndex = newIndex;
@@ -74,7 +74,7 @@ class ProjectController extends GetxController implements GetxService {
       if (kDebugMode) print('GET PROJECT LIST ERROR: $e');
       _loading = false;
       update();
-      return 404;
+      return -1;
     }
   }
 
@@ -119,15 +119,21 @@ class ProjectController extends GetxController implements GetxService {
     _loading = true;
     update();
 
-    Response response = await repo.deleteProject(id);
-    if(response.statusCode == 200){
-      getProjectList();
-    } else {
-      if (kDebugMode) {
-        print('DELETE PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
-        print('BODY: ${response.statusCode}');
-      }
+    try {
+      Response response = await repo.deleteProject(id);
+      if(response.statusCode == 200){
+        getProjectList();
+      } else {
+        if (kDebugMode) {
+          print('DELETE PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
+          print('BODY: ${response.statusCode}');
+        }
 
+        _loading = false;
+        update();
+    }
+    } catch (e) {
+      if (kDebugMode) print('DELETE PROJECT LIST ERROR: $e');
       _loading = false;
       update();
     }
