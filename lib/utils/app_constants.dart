@@ -76,6 +76,7 @@ class AppConstants {
 
   //Dropdown buttons options
   static const List<int> pageSizes = [10, 20, 30, 50];
+  static const List<String> projectStatusOptions = ['WORKING', 'PENDING', 'FINISH'];
 
   // Delivery Tips
   static List<int> tips = [5000, 10000, 20000, 50000];

@@ -1,6 +1,8 @@
 import 'package:timesheet/data/api/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:timesheet/data/model/body/project_model.dart';
+import 'package:timesheet/data/model/body/token_request.dart';
 
 import '../../utils/app_constants.dart';
 
@@ -20,9 +22,11 @@ class ProjectRepo {
     languageCode = sharedPreferences.getString(AppConstants.LANGUAGE_CODE);
     accessToken = sharedPreferences.getString(AppConstants.TOKEN);
     header = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      AppConstants.LOCALIZATION_KEY: languageCode ?? AppConstants.languages[0].languageCode,
-      'Authorization': accessToken != null ? 'Bearer $accessToken' : authorization
+      'Content-Type': 'application/json; charset=utf-8',
+      AppConstants.LOCALIZATION_KEY:
+      languageCode ?? AppConstants.languages[0].languageCode,
+      'Authorization':
+      accessToken != null ? 'Bearer $accessToken' : authorization
     };
   }
 
@@ -32,10 +36,40 @@ class ProjectRepo {
       'pageSize': pageSize.toString()
     };
 
-    return await apiClient.getData(
-        AppConstants.PROJECT,
-        query: queries,
-        headers: header
-    );
+    return await apiClient.getData(AppConstants.PROJECT,
+        query: queries, headers: header);
+  }
+
+  Future<Response> addNewProject(String name, String code, String status,
+      String desc) async {
+    return await apiClient.postData(
+        AppConstants.PROJECT.replaceAll('/page', ''),
+        ProjectModel(id: null,
+            code: code,
+            name: name,
+            status: status,
+            description: desc,
+            task: null),
+        header);
+  }
+
+  Future<Response> updateProject(String id, String code, String name,
+      String desc, String status) async {
+    return await apiClient.putData(
+        '${AppConstants.PROJECT.replaceAll('/page', '')}/$id',
+        ProjectModel(
+            id: id,
+            code: code,
+            name: name,
+            status: status,
+            description: desc,
+            task: null),
+        headers: header);
+  }
+
+  Future<Response> deleteProject(String id) async {
+    return await apiClient.deleteData(
+        '${AppConstants.PROJECT.replaceAll('/page', '')}/$id',
+        headers: header);
   }
 }

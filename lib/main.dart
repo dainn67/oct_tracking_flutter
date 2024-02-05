@@ -49,11 +49,8 @@ Future<void> main() async {
     print('ERROR: $e');
   }
 
-  print('INITING');
-
   Map<String, Map<String, String>> languages = await di.init();
 
-  print('INITING6.');
   runApp(MyApp(languages: languages));
 }
 

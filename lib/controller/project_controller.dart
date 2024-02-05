@@ -16,20 +16,20 @@ class ProjectController extends GetxController implements GetxService {
   int _pageIndex = 1;
   int _pageSize = 10;
   int _maxPages = -1;
-
   List<Project> _projectList = [];
+
+  String _selectedStatus = '';
 
   bool get loading => _loading;
   int get pageIndex => _pageIndex;
-  List<Project> get projectList => _projectList;
 
+  List<Project> get projectList => _projectList;
   set pageIndex(int newIndex) {
     _pageIndex = newIndex;
     getProjectList();
   }
 
   int get pageSize => _pageSize;
-
   set pageSize(int newSize) {
     _pageSize = newSize;
     _pageIndex = 1;
@@ -38,7 +38,13 @@ class ProjectController extends GetxController implements GetxService {
 
   int get maxPages => _maxPages;
 
-  void init(){
+  String get selectedStatus => _selectedStatus;
+  set selectedStatus(String newStatus) {
+    _selectedStatus = newStatus;
+    update();
+  }
+
+  void init() {
     repo.init();
     getProjectList();
   }
@@ -57,8 +63,7 @@ class ProjectController extends GetxController implements GetxService {
       } else {
         if (kDebugMode) {
           print(
-              'GET PROJECT LIST FAILED: ${response.statusCode}\n${response
-                  .body}');
+              'GET PROJECT LIST FAILED: ${response.statusCode}\n${response.body}');
         }
       }
 
@@ -70,6 +75,61 @@ class ProjectController extends GetxController implements GetxService {
       _loading = false;
       update();
       return 404;
+    }
+  }
+
+  Future<void> addNewProject(String name, String code, String status, String desc) async {
+    _loading = true;
+    update();
+
+    Response response = await repo.addNewProject(name, code, status, desc);
+    if (response.statusCode == 200) {
+      getProjectList();
+    } else {
+      if (kDebugMode) {
+        print('ADD PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
+        print('BODY: ${response.statusCode}');
+      }
+
+      _loading = false;
+      update();
+    }
+  }
+
+  Future<void> updateProject(
+      String id, String code, String name, String desc, String status) async {
+    _loading = true;
+    update();
+
+    Response response = await repo.updateProject(id, code, name, desc, status);
+    if (response.statusCode == 200) {
+      getProjectList();
+    } else {
+      if (kDebugMode) {
+        print('UPDATE PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
+        print('BODY: ${response.statusCode}');
+      }
+
+      _loading = false;
+      update();
+    }
+  }
+
+  Future<void> deleteProject(String id) async {
+    _loading = true;
+    update();
+
+    Response response = await repo.deleteProject(id);
+    if(response.statusCode == 200){
+      getProjectList();
+    } else {
+      if (kDebugMode) {
+        print('DELETE PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
+        print('BODY: ${response.statusCode}');
+      }
+
+      _loading = false;
+      update();
     }
   }
 }
