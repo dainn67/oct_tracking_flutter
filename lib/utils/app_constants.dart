@@ -23,6 +23,7 @@ class AppConstants {
   static const String MEMBER = '/timesheet/api/v1/members/page';
   static const String TEAM = '/timesheet/api/v1/teams/page';
   static const String PROJECT = '/timesheet/api/v1/projects/page';
+  static const String USER = '/timesheet/api/v1/users/page';
   static const String SIGN_UP = '/mita/public/sign';
   static const String LOG_OUT = '/mita/oauth/logout';
   static const String GET_USER = '/mita/users/get-user-current';
@@ -77,6 +78,11 @@ class AppConstants {
   //Dropdown buttons options
   static const List<int> pageSizes = [10, 20, 30, 50];
   static const List<String> projectStatusOptions = ['WORKING', 'PENDING', 'FINISH'];
+  static const List<String> positionList = ['DEV FE', 'DEV BE', 'DEV FULLSTACK', 'TESTER'];
+  static const List<String> genderList = ['MALE', 'FEMALE', 'LGBT', 'OTHER'];
+  static const List<String> typeList = ['LEADER', 'DEPUTY LEADER', 'MEMBER'];
+  static const List<String> statusList = ['STAFF', 'INTERNSHIP'];
+  static const List<String> skillList = ['LEADER', 'L0', 'L1', 'L2', 'L3', 'L4'];
 
   // Delivery Tips
   static List<int> tips = [5000, 10000, 20000, 50000];

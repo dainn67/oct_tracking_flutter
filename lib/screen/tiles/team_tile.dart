@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesheet/screen/dialogs/team_detail.dart';
 
 import '../../data/model/response/team.dart';
 import '../../utils/images.dart';
@@ -39,7 +40,9 @@ class TeamTile extends StatelessWidget {
                   children: [
                     Text(team.name,
                         style: const TextStyle(
-                            color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold)),
+                            color: Colors.green,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
                     Text(team.code,
                         style: const TextStyle(
                             color: Colors.grey, fontWeight: FontWeight.bold)),
@@ -48,7 +51,9 @@ class TeamTile extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => TeamDetail(team: team)),
               child: SizedBox(
                   height: 30, width: 30, child: Image.asset(Images.edit_icon)),
             )

@@ -34,4 +34,18 @@ class Team {
       members: json['members'] != null ? List<String>.from(json['members']) : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'createDate': createDate,
+      'createdBy': createdBy,
+      'modifyDate': modifyDate,
+      'modifiedBy': modifiedBy,
+      'id': id,
+      'name': name,
+      'code': code,
+      'description': description,
+      'members': members,
+    };
+  }
 }

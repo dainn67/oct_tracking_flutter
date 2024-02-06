@@ -23,9 +23,9 @@ class ProjectRepo {
     header = {
       'Content-Type': 'application/json; charset=utf-8',
       AppConstants.LOCALIZATION_KEY:
-      languageCode ?? AppConstants.languages[0].languageCode,
+          languageCode ?? AppConstants.languages[0].languageCode,
       'Authorization':
-      accessToken != null ? 'Bearer $accessToken' : authorization
+          accessToken != null ? 'Bearer $accessToken' : authorization
     };
   }
 
@@ -39,11 +39,12 @@ class ProjectRepo {
         query: queries, headers: header);
   }
 
-  Future<Response> addNewProject(String name, String code, String status,
-      String desc) async {
+  Future<Response> addNewProject(
+      String name, String code, String status, String desc) async {
     return await apiClient.postData(
         AppConstants.PROJECT.replaceAll('/page', ''),
-        ProjectModel(id: null,
+        ProjectModel(
+            id: null,
             code: code,
             name: name,
             status: status,
@@ -52,12 +53,12 @@ class ProjectRepo {
         header);
   }
 
-  Future<Response> updateProject(String id, String code, String name,
-      String desc, String status) async {
+  Future<Response> updateProject(
+      String id, String code, String name, String desc, String status) async {
     return await apiClient.putData(
         '${AppConstants.PROJECT.replaceAll('/page', '')}/$id',
         ProjectModel(
-            id: id,
+            id: id.toString(),
             code: code,
             name: name,
             status: status,

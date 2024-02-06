@@ -17,17 +17,26 @@ class PersonnelController extends GetxController implements GetxService {
   int _pageIndex = 1;
   int _pageSize = 10;
   int _maxPages = -1;
+
   String? _teamId;
+  String _teamName = '';
+
   List<Team> _teamList = [];
+  List<String> _teamNameList = [];
   List<Member> _memberList = [];
 
   int _pageCategory = 0; //0 is team, 1 is member
 
   bool get loading => _loading;
+
   List<Team> get teamList => _teamList;
+
+  List<String> get teamNameList => _teamNameList;
+
   List<Member> get memberList => _memberList;
 
   int get pageCategory => _pageCategory;
+
   set pageCategory(int index) {
     _pageCategory = index;
     update();
@@ -38,13 +47,27 @@ class PersonnelController extends GetxController implements GetxService {
     // }
   }
 
+  String get selectedTeamName => _teamName;
+
+  set selectedTeamName(String newValue) {
+    _teamName = newValue;
+
+    if (newValue == 'None')
+      _teamId = null;
+    else
+      _teamId = _teamList.firstWhere((team) => team.name == _teamName).id;
+    getMemberList();
+  }
+
   int get pageIndex => _pageIndex;
+
   set pageIndex(int newIndex) {
     _pageIndex = newIndex;
     _pageCategory == 0 ? getTeamList() : getMemberList();
   }
 
   int get pageSize => _pageSize;
+
   set pageSize(int newSize) {
     _pageSize = newSize;
     _pageIndex = 1;
@@ -53,24 +76,26 @@ class PersonnelController extends GetxController implements GetxService {
 
   int get maxPages => _maxPages;
 
-  void init() {
+  Future<void> init() async {
     repo.init();
-    getTeamList();
-    getMemberList();
+    _pageCategory = 0;
+    await getTeamList();
+    await getMemberList();
   }
 
-  void resetTeamOptions(){
+  void resetTeamOptions() {
     _pageCategory = 0;
     _pageSize = 10;
     _pageIndex = 1;
     getTeamList();
   }
 
-  void resetMemberOptions(){
+  void resetMemberOptions() {
     _pageCategory = 1;
     _pageSize = 10;
     _pageIndex = 1;
     _teamId = null;
+    _teamName = 'None';
     getMemberList();
   }
 
@@ -83,6 +108,8 @@ class PersonnelController extends GetxController implements GetxService {
       if (response.statusCode == 200) {
         ApiResponse apiResponse = ApiResponse.fromJson(response.body);
         _teamList = apiResponse.data.content as List<Team>;
+        _teamNameList = _teamList.map((team) => team.name).toList();
+        // _teamName = _teamNameList[0];
         _maxPages = apiResponse.data.totalPages;
         print('MAX PAGE: $_maxPages');
       } else {
@@ -108,7 +135,8 @@ class PersonnelController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response = await repo.getMemberList(_teamId, _pageIndex, _pageSize);
+      Response response =
+          await repo.getMemberList(_teamId, _pageIndex, _pageSize);
       if (response.statusCode == 200) {
         ApiResponse apiResponse = ApiResponse.fromJson(response.body);
         _memberList = apiResponse.data.content as List<Member>;
@@ -130,5 +158,72 @@ class PersonnelController extends GetxController implements GetxService {
       update();
       return -1;
     }
+  }
+
+  Future<void> updateTeam(
+      String id, String code, String name, String desc) async {
+    _loading = true;
+    update();
+
+    try {
+      Response response = await repo.updateTeam(id, code, name, desc);
+      if (response.statusCode == 200) {
+        getTeamList();
+      } else {
+        if (kDebugMode) {
+          print('UPDATE TEAM FAILED: ${response.statusCode}\n${response.body}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) print('UPDATE TEAM ERROR: $e');
+    }
+
+    _loading = false;
+    update();
+  }
+
+  Future<void> updateMember(
+      String id,
+      String code,
+      String dateJoin,
+      String email,
+      String gender,
+      String level,
+      String name,
+      String position,
+      String status,
+      String teamName,
+      String type) async {
+    _loading = true;
+    update();
+
+    try {
+      Team team = _teamList.firstWhere((team) => team.name == teamName);
+      Response response = await repo.updateMember(
+          id,
+          code,
+          dateJoin,
+          email,
+          gender,
+          level,
+          name,
+          position.replaceAll(' ', '_'),
+          status,
+          team,
+          type.replaceAll(' ', '_'));
+      if (response.statusCode == 200) {
+        getMemberList();
+      } else {
+        if (kDebugMode) {
+          print(
+              'UPDATE MEMBER FAILED: ${response.statusCode}\n${response.body}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) print('UPDATE MEMBER ERROR: $e');
+    }
+
+    _loading = false;
+    update();
   }
 }

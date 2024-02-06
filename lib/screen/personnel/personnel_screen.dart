@@ -16,53 +16,66 @@ class PersonnelScreen extends StatefulWidget {
 }
 
 class _PersonnelScreenState extends State<PersonnelScreen> {
+  List<String> teamListFilter = [];
+
   @override
   void initState() {
     super.initState();
-
-    Get.find<PersonnelController>().init();
+    Get.find<PersonnelController>().init().then((value) {
+      teamListFilter.add('None');
+      teamListFilter.addAll(Get.find<PersonnelController>().teamNameList);
+      Get.find<PersonnelController>().selectedTeamName = teamListFilter[0];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PersonnelController>(
-      builder: (controller) => Stack(
-        children: [
-          Opacity(
-            opacity: controller.loading ? 0.6 : 1,
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: GNav(
-                      padding: const EdgeInsets.all(20),
-                      gap: 30,
-                      hoverColor: Colors.grey,
-                      tabBorder: Border.all(color: Colors.black),
-                      onTabChange: (index) {
-                        index == 0 ? controller.resetTeamOptions() : controller.resetMemberOptions();
-                      },
-                      tabs: const [
-                        GButton(icon: Icons.group, text: 'Team', ),
-                        GButton(icon: Icons.man, text: 'Member')
-                      ]),
+      builder: (controller) =>
+          Stack(
+            children: [
+              Opacity(
+                opacity: controller.loading ? 0.6 : 1,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      child: GNav(
+                          padding: const EdgeInsets.all(20),
+                          gap: 30,
+                          hoverColor: Colors.grey,
+                          tabBorder: Border.all(color: Colors.black),
+                          onTabChange: (index) {
+                            index == 0
+                                ? controller.resetTeamOptions()
+                                : controller.resetMemberOptions();
+                          },
+                          tabs: const [
+                            GButton(
+                              icon: Icons.group,
+                              text: 'Team',
+                            ),
+                            GButton(icon: Icons.man, text: 'Member')
+                          ]),
+                    ),
+                    if (controller.pageCategory == 1) _filterMemberBox(
+                        controller),
+                    controller.pageCategory == 0
+                        ? _mainTeamListBox(controller)
+                        : _mainMemberListBox(controller),
+                    _teamDisplayOptions(controller)
+                  ],
                 ),
-                controller.pageCategory == 0
-                    ? _mainTeamListBox(controller)
-                    : _mainMemberListBox(controller),
-                _teamDisplayOptions(controller)
-              ],
-            ),
+              ),
+              Center(
+                child: Visibility(
+                  visible: controller.loading,
+                  child: const CircularProgressIndicator(),
+                ),
+              )
+            ],
           ),
-          Center(
-            child: Visibility(
-              visible: controller.loading,
-              child: const CircularProgressIndicator(),
-            ),
-          )
-        ],
-      ),
     );
   }
 
@@ -71,7 +84,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(8), boxShadow: [
+        BoxDecoration(borderRadius: BorderRadius.circular(8), boxShadow: [
           BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 3,
@@ -79,7 +92,10 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
               offset: const Offset(2, 2))
         ]),
         child: Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             height: double.infinity,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
@@ -91,6 +107,45 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                       TeamTile(team: controller.teamList[index])),
             )),
       ),
+    );
+  }
+
+  _filterMemberBox(PersonnelController controller) {
+    return Container(
+      height: 50,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration:
+      BoxDecoration(borderRadius: BorderRadius.circular(8), boxShadow: [
+        BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 2,
+            offset: const Offset(2, 2))
+      ]),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Team filter', style: TextStyle(fontWeight: FontWeight.bold),),
+            GetBuilder<PersonnelController>(
+              builder: (controller) => DropdownButton(
+                  value: Get.find<PersonnelController>().selectedTeamName,
+                  items: teamListFilter
+                      .map<DropdownMenuItem<String>>((item) =>
+                      DropdownMenuItem(value: item, child: Text(item)),)
+                      .toList(),
+                  onChanged: (newValue) {
+                    if(newValue != null) {
+                      Get.find<PersonnelController>().selectedTeamName = newValue;
+                    }
+              }),
+            )
+          ]
+        )
+      )
     );
   }
 
@@ -107,7 +162,10 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
               offset: const Offset(2, 2))
         ]),
         child: Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             height: double.infinity,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
@@ -127,7 +185,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
       height: 60,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(8), boxShadow: [
+      BoxDecoration(borderRadius: BorderRadius.circular(8), boxShadow: [
         BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 3,
@@ -135,7 +193,10 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
             offset: const Offset(2, 2))
       ]),
       child: Container(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Center(
@@ -163,7 +224,9 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                         }).toList(),
                         onChanged: (int? newValue) {
                           if (newValue != null) {
-                            Get.find<PersonnelController>().pageSize = newValue;
+                            Get
+                                .find<PersonnelController>()
+                                .pageSize = newValue;
                           }
                         })
                   ],
@@ -178,7 +241,9 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                       child: GestureDetector(
                         onTap: () {
                           if (controller.pageIndex > 1) {
-                            Get.find<PersonnelController>().pageIndex =
+                            Get
+                                .find<PersonnelController>()
+                                .pageIndex =
                                 controller.pageIndex - 1;
                           }
                         },
@@ -193,11 +258,13 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                     const SizedBox(width: 10),
                     Opacity(
                       opacity:
-                          controller.pageIndex == controller.maxPages ? 0 : 1,
+                      controller.pageIndex == controller.maxPages ? 0 : 1,
                       child: GestureDetector(
                         onTap: () {
                           if (controller.pageIndex < controller.maxPages) {
-                            Get.find<PersonnelController>().pageIndex =
+                            Get
+                                .find<PersonnelController>()
+                                .pageIndex =
                                 controller.pageIndex + 1;
                           }
                         },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:timesheet/screen/tiles/project_detail.dart';
+import 'package:timesheet/screen/dialogs/project_detail.dart';
 import 'package:timesheet/screen/tiles/project_tile.dart';
 
 import '../../controller/project_controller.dart';
@@ -174,16 +174,14 @@ class _ProjectScreenState extends State<ProjectScreen> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.green, onPrimary: Colors.white),
                     onPressed: () {
-                      _showNewProjectDialog(context);
+                      showDialog(
+                          context: context,
+                          builder: (context) => const ProjectDetail());
                     },
                     child: const Text('Add new'))),
           ],
         ),
       ),
     );
-  }
-
-  _showNewProjectDialog(BuildContext context) {
-    showDialog(context: context, builder: (context) => const ProjectDetail());
   }
 }

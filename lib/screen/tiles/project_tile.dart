@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/controller/project_controller.dart';
-import 'package:timesheet/screen/tiles/project_detail.dart';
+import 'package:timesheet/screen/dialogs/confirm_delete.dart';
+import 'package:timesheet/screen/dialogs/project_detail.dart';
 import 'package:timesheet/utils/images.dart';
 import 'package:get/get.dart';
 
@@ -103,25 +104,9 @@ class _ProjectTileState extends State<ProjectTile> {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm Action'),
-          content: const Text('Are you sure you want to perform this action?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.find<ProjectController>().deleteProject(widget.project.id);
-                Navigator.pop(context);
-              },
-              child: const Text('Confirm'),
-            ),
-          ],
-        );
+        return ConfirmDelete(callback: () {
+          Get.find<ProjectController>().deleteProject(widget.project.id);
+        });
       },
     );
   }

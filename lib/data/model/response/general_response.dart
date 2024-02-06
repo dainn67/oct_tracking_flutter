@@ -1,4 +1,5 @@
 import 'package:timesheet/data/model/response/team.dart';
+import 'package:timesheet/data/model/response/user.dart';
 import 'package:timesheet/data/model/response/work_day.dart';
 
 import 'Task.dart';
@@ -70,6 +71,10 @@ class ApiData {
     } else if (json['content'].toString().contains('members')){
       content = (json['content'] as List)
           .map((contentJson) => Team.fromJson(contentJson))
+          .toList();
+    } else if (json['content'].toString().contains('roles')){
+      content = (json['content'] as List)
+          .map((contentJson) => User.fromJson(contentJson))
           .toList();
     } else {
       content = (json['content'] as List)

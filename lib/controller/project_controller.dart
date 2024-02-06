@@ -18,8 +18,6 @@ class ProjectController extends GetxController implements GetxService {
   int _maxPages = -1;
   List<Project> _projectList = [];
 
-  String _selectedStatus = '';
-
   bool get loading => _loading;
 
   int get pageIndex => _pageIndex;
@@ -37,12 +35,6 @@ class ProjectController extends GetxController implements GetxService {
   }
 
   int get maxPages => _maxPages;
-
-  String get selectedStatus => _selectedStatus;
-  set selectedStatus(String newStatus) {
-    _selectedStatus = newStatus;
-    update();
-  }
 
   void init() {
     repo.init();
@@ -106,7 +98,7 @@ class ProjectController extends GetxController implements GetxService {
       getProjectList();
     } else {
       if (kDebugMode) {
-        print('UPDATE PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
+        print('UPDATE PROJECT FAILED WITH CODE: ${response.statusCode}');
         print('BODY: ${response.statusCode}');
       }
 
@@ -125,7 +117,7 @@ class ProjectController extends GetxController implements GetxService {
         getProjectList();
       } else {
         if (kDebugMode) {
-          print('DELETE PROJECT LIST FAILED WITH CODE: ${response.statusCode}');
+          print('DELETE PROJECT FAILED WITH CODE: ${response.statusCode}');
           print('BODY: ${response.statusCode}');
         }
 

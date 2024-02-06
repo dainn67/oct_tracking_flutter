@@ -18,7 +18,7 @@ class Member {
   String status;
   String dateJoin;
   Team team;
-  User user;
+  UserBody user;
 
   Member({
     required this.createDate,
@@ -56,7 +56,7 @@ class Member {
       status: json['status'],
       dateJoin: json['dateJoin'],
       team: Team.fromJson(json['team']),
-      user: User.fromJson(json['user']),
+      user: UserBody.fromJson(json['user']),
     );
   }
 }

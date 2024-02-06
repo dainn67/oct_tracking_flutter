@@ -173,11 +173,9 @@ class ApiClient extends GetxService {
   Future<Response> putData(String uri, dynamic body,
       {Map<String, String>? headers}) async {
     try {
-      if (Foundation.kDebugMode) {
+      if (kDebugMode) {
         print('====> API Call: ${appBaseUrl + uri}\nHeader: ${headers ?? _mainHeaders}');
-        print('HII');
         print('====> API Body: ${jsonEncode(body)}');
-        print('HIII');
       }
 
       Http.Response response = await Http.put(
@@ -187,7 +185,7 @@ class ApiClient extends GetxService {
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response, uri);
     } catch (e) {
-      print('PUT DATA ERROR: $e');
+      if (kDebugMode) print('PUT DATA ERROR: $e');
       return Response(statusCode: 1, statusText: noInternetMessage);
     }
   }

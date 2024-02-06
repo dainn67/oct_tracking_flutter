@@ -141,6 +141,7 @@ class Images {
   static const String female = 'assets/image/female.png';
   static const String lgbtq = 'assets/image/lgbtq.png';
   static const String other = 'assets/image/Other_gender.png';
+  static const String general_user = 'assets/image/general_user.png';
 
 
 

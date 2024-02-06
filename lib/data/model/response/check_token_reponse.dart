@@ -1,14 +1,14 @@
-class User {
+class TokenUser {
   late String userName;
   late List<String> scope;
   late bool active;
   late int exp;
-  late UserDetail user;
+  late TokenUserDetail user;
   late List<String> authorities;
   late String jti;
   late String clientId;
 
-  User({
+  TokenUser({
     required this.userName,
     required this.scope,
     required this.active,
@@ -20,13 +20,13 @@ class User {
   });
 
   // Factory method to create User instance from JSON
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory TokenUser.fromJson(Map<String, dynamic> json) {
+    return TokenUser(
       userName: json['user_name'],
       scope: List<String>.from(json['scope']),
       active: json['active'],
       exp: json['exp'],
-      user: UserDetail.fromJson(json['user']),
+      user: TokenUserDetail.fromJson(json['user']),
       authorities: List<String>.from(json['authorities']),
       jti: json['jti'],
       clientId: json['client_id'],
@@ -34,7 +34,7 @@ class User {
   }
 }
 
-class UserDetail {
+class TokenUserDetail {
   late String createDate;
   late String createdBy;
   late String modifyDate;
@@ -42,7 +42,7 @@ class UserDetail {
   late int id;
   // Other properties ...
 
-  UserDetail({
+  TokenUserDetail({
     required this.createDate,
     required this.createdBy,
     required this.modifyDate,
@@ -52,8 +52,8 @@ class UserDetail {
   });
 
   // Factory method to create UserDetail instance from JSON
-  factory UserDetail.fromJson(Map<String, dynamic> json) {
-    return UserDetail(
+  factory TokenUserDetail.fromJson(Map<String, dynamic> json) {
+    return TokenUserDetail(
       createDate: json['createDate'],
       createdBy: json['createdBy'],
       modifyDate: json['modifyDate'],

@@ -14,11 +14,11 @@ class User {
   String? phone;
   bool justCreated;
   int? lastLoginFailures;
-  DateTime? lastLoginTime;
+  String? lastLoginTime;
   int? totalLoginFailures;
-  dynamic orgId;
-  List<String>? roles;
-  List<String>? authorities;
+  String? orgId;
+  List<String> roles;
+  List<String> authorities;
 
   User({
     required this.createDate,
@@ -26,19 +26,19 @@ class User {
     required this.modifyDate,
     required this.modifiedBy,
     required this.id,
-    required this.gender,
+    this.gender,
     required this.username,
     required this.accountNonExpired,
     required this.accountNonLocked,
     required this.active,
     required this.credentialsNonExpired,
     required this.email,
-    required this.phone,
+    this.phone,
     required this.justCreated,
-    required this.lastLoginFailures,
-    required this.lastLoginTime,
-    required this.totalLoginFailures,
-    required this.orgId,
+    this.lastLoginFailures,
+    this.lastLoginTime,
+    this.totalLoginFailures,
+    this.orgId,
     required this.roles,
     required this.authorities,
   });
@@ -60,16 +60,36 @@ class User {
       phone: json['phone'],
       justCreated: json['justCreated'],
       lastLoginFailures: json['lastLoginFailures'],
-      lastLoginTime: json['lastLoginTime'] != null
-          ? DateTime.parse(json['lastLoginTime'])
-          : null,
+      lastLoginTime: json['lastLoginTime'],
       totalLoginFailures: json['totalLoginFailures'],
       orgId: json['orgId'],
-      roles:
-      (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      authorities: (json['authorities'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      roles: List<String>.from(json['roles']),
+      authorities: List<String>.from(json['authorities']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'createDate': createDate,
+      'createdBy': createdBy,
+      'modifyDate': modifyDate,
+      'modifiedBy': modifiedBy,
+      'id': id,
+      'gender': gender,
+      'username': username,
+      'accountNonExpired': accountNonExpired,
+      'accountNonLocked': accountNonLocked,
+      'active': active,
+      'credentialsNonExpired': credentialsNonExpired,
+      'email': email,
+      'phone': phone,
+      'justCreated': justCreated,
+      'lastLoginFailures': lastLoginFailures,
+      'lastLoginTime': lastLoginTime,
+      'totalLoginFailures': totalLoginFailures,
+      'orgId': orgId,
+      'roles': roles,
+      'authorities': authorities,
+    };
   }
 }

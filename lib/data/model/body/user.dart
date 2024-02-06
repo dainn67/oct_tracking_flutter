@@ -1,63 +1,63 @@
+class UserBody {
+  String username;
+  String displayName;
+  String email;
+  int gender;
+  List<String> roles;
+  String password;
+  bool active;
+  bool justCreated;
+  bool accountNonLocked;
+  bool accountNonExpired;
+  bool credentialsNonExpired;
+  String confirmPassword;
 
-class User {
-  int? id;
-  String? username;
-  bool? active;
-  String? birthPlace;
-  String? confirmPassword;
-  String? displayName;
-  String? dob;
-  String? email;
-  String? firstName;
-  String? lastName;
-  String? password;
-
-  User({
-    this.id,
-    this.username,
-    this.active,
-    this.birthPlace,
-    this.confirmPassword,
-    this.displayName,
-    this.dob,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.password,
+  UserBody({
+    required this.username,
+    required this.displayName,
+    required this.email,
+    required this.gender,
+    required this.roles,
+    required this.password,
+    required this.active,
+    required this.justCreated,
+    required this.accountNonLocked,
+    required this.accountNonExpired,
+    required this.credentialsNonExpired,
+    required this.confirmPassword,
   });
-  User.fromJson(Map<String, dynamic> json) {
-    // List<dynamic> listRoles = json['roles']??[];
-    // List<Role> rolesList = listRoles.cast<Role>().toList();
-    id = json['id'];
-    username = json['username'];
-    active = json['active'];
-    birthPlace = json['birthPlace'];
-    confirmPassword = json['confirmPassword'];
-    displayName = json['displayName'];
-    dob = json['dob'];
-    email = json['email'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    password = json['password'];
+
+  factory UserBody.fromJson(Map<String, dynamic> json) {
+    return UserBody(
+      username: json['username'] ?? '',
+      displayName: json['displayName'] ?? '',
+      email: json['email'] ?? '',
+      gender: json['gender'] ?? 0,
+      roles: List<String>.from(json['roles'] ?? []),
+      password: json['password'] ?? '',
+      active: json['active'] ?? false,
+      justCreated: json['justCreated'] ?? false,
+      accountNonLocked: json['accountNonLocked'] ?? false,
+      accountNonExpired: json['accountNonExpired'] ?? false,
+      credentialsNonExpired: json['credentialsNonExpired'] ?? false,
+      confirmPassword: json['confirmPassword'] ?? '',
+    );
   }
+
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'username':username,
-      'active':active,
-      'birthPlace':birthPlace,
-      'confirmPassword':confirmPassword,
-      "displayName":displayName,
-      'dob':dob,
-      'email':email,
-      'firstName':firstName,
-      'lastName':lastName,
-      'password':password,
-      // 'roles': roles?.map((roles) => roles.toJson()).toList(),
-      // 'university':university,
-      // 'year':year,
-      // 'gender':gender,
-      // 'hasPhoto':hasPhoto
+      'username': username,
+      'displayName': displayName,
+      'email': email,
+      'gender': gender,
+      'roles': roles,
+      'password': password,
+      'active': active,
+      'justCreated': justCreated,
+      'accountNonLocked': accountNonLocked,
+      'accountNonExpired': accountNonExpired,
+      'credentialsNonExpired': credentialsNonExpired,
+      'confirmPassword': confirmPassword,
     };
   }
 }

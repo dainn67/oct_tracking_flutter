@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/data/model/response/member.dart';
-import 'package:timesheet/screen/common/CommonWidgets.dart';
+import 'package:timesheet/screen/dialogs/member_detail.dart';
 import 'package:timesheet/utils/images.dart';
 
 class MemberTile extends StatelessWidget {
@@ -43,9 +43,14 @@ class MemberTile extends StatelessWidget {
                               fontSize: 10)),
                     ],
                   )),
-                  SizedBox(
-                    width: 36,
-                    child: Image.asset(Images.edit_icon),
+                  GestureDetector(
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: (context) => MemberDetail(member: member)),
+                    child: SizedBox(
+                      width: 36,
+                      child: Image.asset(Images.edit_icon),
+                    ),
                   )
                 ],
               ),
