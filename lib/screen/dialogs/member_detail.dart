@@ -30,7 +30,7 @@ class _MemberDetailState extends State<MemberDetail> {
     selectedLevel = widget.member.level.replaceAll('_', ' ');
     selectedPosition = widget.member.position.replaceAll('_', ' ');
     selectedStatus = widget.member.status.replaceAll('_', ' ');
-    selectedTeamName = widget.member.team.name.replaceAll('_', ' ');
+    selectedTeamName = widget.member.team!.name.replaceAll('_', ' ');
     selectedType = widget.member.type.replaceAll('_', ' ');
 
     return Center(
@@ -223,6 +223,8 @@ class _MemberDetailState extends State<MemberDetail> {
                           selectedStatus = newValue;
                         case 'skill':
                           selectedLevel = newValue;
+                        case 'team':
+                          selectedTeamName = newValue;
                       }
                     });
                   }

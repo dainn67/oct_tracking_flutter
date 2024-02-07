@@ -44,7 +44,7 @@ Future<void> main() async {
       FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
   } catch (e) {
-    print('ERROR: $e');
+    if(kDebugMode) print('START ERROR: $e');
   }
 
   Map<String, Map<String, String>> languages = await di.init();
@@ -61,7 +61,8 @@ class MyApp extends StatelessWidget {
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         FlutterNativeSplash.remove();
-        print("Kết thúc init: ${DateTime.now()}");
+        if(kDebugMode) print("Kết thúc init: ${DateTime.now()}");
+
         return GetMaterialApp(
           title: AppConstants.APP_NAME,
           debugShowCheckedModeBanner: false,
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
               : RouteHelper.getSplashRoute(),
           getPages: RouteHelper.routes,
           defaultTransition: Transition.topLevel,
-          transitionDuration: const Duration(milliseconds: 250),
+          transitionDuration: const Duration(milliseconds: 200),
         );
       });
     });

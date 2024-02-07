@@ -89,5 +89,4 @@ class UserTile extends StatelessWidget {
       },
     );
   }
-
 }

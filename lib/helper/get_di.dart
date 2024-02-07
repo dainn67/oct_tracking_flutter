@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timesheet/controller/auth_controller.dart';
 import 'package:timesheet/controller/personnel_controller.dart';
-import 'package:timesheet/controller/traking_controller.dart';
+import 'package:timesheet/controller/tracking_controller.dart';
 import 'package:timesheet/data/repository/project_repo.dart';
 import 'package:timesheet/data/repository/splash_repo.dart';
 import 'package:timesheet/data/repository/tracking_repo.dart';
@@ -33,8 +33,7 @@ Future<Map<String, Map<String, String>>> init() async {
 
   Get.lazyPut(() => sharedPreferences);
   Get.lazyPut(() => firstCamera);
-  Get.lazyPut(() => ApiClient(
-      appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
+  Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
 
   // Repository
   Get.lazyPut(() => LanguageRepo());
@@ -61,26 +60,27 @@ Future<Map<String, Map<String, String>>> init() async {
     Get.lazyPut(() => newLocalData);
   }
 
-  print('INIT DI');
-
   // Retrieving localized data
   Map<String, Map<String, String>> languages = {};
 
   for (LanguageModel languageModel in AppConstants.languages) {
-    if(kDebugMode) print('HERE: assets/language/${languageModel.languageCode}.json');
 
     String jsonStringValues = await rootBundle
         .loadString('assets/language/${languageModel.languageCode}.json');
 
+    if(kDebugMode) print('JSONSTRINGVALUE: $jsonStringValues');
 
-    Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
-    Map<String, String> _json = {};
+    Map<String, dynamic> mappedJson = jsonDecode(jsonStringValues);
+    Map<String, String> json = {};
 
     mappedJson.forEach((key, value) {
-      _json[key] = value.toString();
+      json[key] = value.toString();
     });
+
     languages['${languageModel.languageCode}_${languageModel.countryCode}'] =
-        _json;
+        json;
+
+    print('SETTING language[${languageModel.languageCode}_${languageModel.countryCode}]');
   }
 
   print('INIT DI: $languages');

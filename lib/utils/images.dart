@@ -55,6 +55,7 @@ class Images {
   static const String project = 'assets/image/project.png';
   static const String personnel = 'assets/image/personnel.png';
   static const String user = 'assets/image/user.png';
+  static const String teamwork = 'assets/image/teamwork.png';
 
   static const String my_location_marker = 'assets/image/my_location_marker.png';
   static const String user_marker = 'assets/image/user_marker.png';

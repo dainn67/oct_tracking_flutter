@@ -29,7 +29,7 @@ class TeamTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(8)),
         child: Row(
           children: [
-            const Icon(Icons.group),
+            SizedBox(height: 50, child: Image.asset(Images.teamwork)),
             Expanded(
               child: Padding(
                 padding:
@@ -40,6 +40,7 @@ class TeamTile extends StatelessWidget {
                   children: [
                     Text(team.name,
                         style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
                             color: Colors.green,
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
@@ -50,6 +51,16 @@ class TeamTile extends StatelessWidget {
                 ),
               ),
             ),
+            Container(
+                margin: const EdgeInsets.only(right: 10),
+                width: 120,
+                child: Text(
+                  team.description,
+                  style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold),
+                )),
             GestureDetector(
               onTap: () => showDialog(
                   context: context,

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'Task.dart';
 import 'member.dart';
 
@@ -35,7 +33,9 @@ class WorkingDay {
       id: receivedJson['id'],
       dayOff: receivedJson['dayOff'],
       dateWorking: receivedJson['dateWorking'],
-      member: receivedJson['member'] != null ? Member.fromJson(receivedJson['member']) : null,
+      member: receivedJson['member'] != null
+          ? Member.fromJson(receivedJson['member'])
+          : null,
       tasks: receivedJson['tasks'] != null
           ? (receivedJson['tasks'] as List)
               .map((taskJson) => Task.fromJson(taskJson))
@@ -44,4 +44,3 @@ class WorkingDay {
     );
   }
 }
-

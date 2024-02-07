@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:flutter/material.dart';
-import 'package:timesheet/controller/traking_controller.dart';
+import 'package:timesheet/controller/tracking_controller.dart';
 import 'package:timesheet/screen/tiles/tracking_tile.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/utils/app_constants.dart';
@@ -98,7 +98,7 @@ class _StartScreenState extends State<StartScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Team',
+                  Text('team'.tr,
                       style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 18,
@@ -136,7 +136,7 @@ class _StartScreenState extends State<StartScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Member',
+                  Text('member'.tr,
                       style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 18,

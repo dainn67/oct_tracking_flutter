@@ -36,7 +36,7 @@ class MemberTile extends StatelessWidget {
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
                               fontSize: 18)),
-                      Text('${member.type} (${member.email})',
+                      Text('${member.type.replaceAll('_', ' ')} (${member.email})',
                           style: const TextStyle(
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.bold,

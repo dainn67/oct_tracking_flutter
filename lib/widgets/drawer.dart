@@ -16,10 +16,8 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class DrawerState extends State<CustomDrawer> {
-  DrawerState();
+  // DrawerState();
 
-  // var showCCDC = false.obs;
-  // var showShopping = false.obs;
   List<String> _langs = ["lang_vi", "lang_en"];
   var _lang = "lang_vi".obs;
 
@@ -27,163 +25,156 @@ class DrawerState extends State<CustomDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: const Color(0xff7377c5),
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-
-          //header
-          DrawerHeader(
-            decoration: const BoxDecoration(color: Color(0xff5f62a1)),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Tracking',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey.shade200,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.person_sharp,
-                        color: Colors.grey.shade200,
-                        size: 60,
-                      ),
-                      GetBuilder<AuthController>(
-                        builder: (controller) =>
-                            Text(
-                              'Admin',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey.shade200,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-
-          //Options
-          ListTile(
-            leading: const Icon(
-              Icons.track_changes_rounded,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Tracking'.tr,
-              style: const TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              widget.changePage('home');
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Project'.tr,
-              style: const TextStyle(color: Colors.white),
-            ),
-            leading: const Icon(
-              Icons.account_tree_rounded,
-              color: Colors.white,
-            ),
-            onTap: () {
-              widget.changePage('Project');
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Personnel'.tr,
-              style: const TextStyle(color: Colors.white),
-            ),
-            leading: const Icon(
-              Icons.group,
-              color: Colors.white,
-            ),
-            onTap: () {
-              widget.changePage('Personnel');
-            },
-          ),
-          ListTile(
-            title: Text(
-              'User'.tr,
-              style: const TextStyle(color: Colors.white),
-            ),
-            leading: const Icon(
-              Icons.supervised_user_circle_rounded,
-              color: Colors.white,
-            ),
-            onTap: () {
-              widget.changePage('User');
-            },
-          ),
-
-          const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15), child: Divider()),
-
-          ListTile(
-            title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: GetBuilder<LocalizationController>(
+        builder: (controller) => ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            //header
+            DrawerHeader(
+              decoration: const BoxDecoration(color: Color(0xff5f62a1)),
+              child: Column(
                 children: [
-                  GetBuilder<LocalizationController>(
-                    builder: (controller) {
-                      return Text(
-                          controller.locale.languageCode == 'vi'
-                              ? 'lang_vi'.tr
-                              : 'lang_en'.tr,
-                          style: const TextStyle(color: Colors.white));
-                    },
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Tracking'.tr,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey.shade200,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  const Icon(Icons.arrow_drop_down, color: Colors.white)
-                ]),
-            leading: const Icon(
-              Icons.language,
-              color: Colors.white,
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.person_sharp,
+                          color: Colors.grey.shade200,
+                          size: 60,
+                        ),
+                        Text(
+                          'Admin',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade200,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-            onTap: () {
-              _showPopupMenu(
-                      (index) =>
-                  {
-                    Get.find<LocalizationController>().setLanguage(Locale(
-                      AppConstants.languages[index].languageCode,
-                      AppConstants.languages[index].countryCode,
-                    ))
-                  },
-                  this.context);
-            },
-          ),
 
-          ListTile(
-            title: Text(
-              'About us'.tr,
-              style: const TextStyle(color: Colors.white),
+            //Options
+            ListTile(
+              leading: const Icon(
+                Icons.track_changes_rounded,
+                color: Colors.white,
+              ),
+              title: Text(
+                'tracking'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                widget.changePage('home');
+              },
             ),
-            leading: const Icon(
-              Icons.info,
-              color: Colors.white,
+            ListTile(
+              title: Text(
+                'project'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
+              leading: const Icon(
+                Icons.account_tree_rounded,
+                color: Colors.white,
+              ),
+              onTap: () {
+                widget.changePage('Project');
+              },
             ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              'Log out'.tr,
-              style: const TextStyle(color: Colors.white),
+            ListTile(
+              title: Text(
+                'personnel'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
+              leading: const Icon(
+                Icons.group,
+                color: Colors.white,
+              ),
+              onTap: () {
+                widget.changePage('Personnel');
+              },
             ),
-            leading: const Icon(
-              Icons.exit_to_app,
-              color: Colors.white,
+            ListTile(
+              title: Text(
+                'user'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
+              leading: const Icon(
+                Icons.supervised_user_circle_rounded,
+                color: Colors.white,
+              ),
+              onTap: () {
+                widget.changePage('User');
+              },
             ),
-            onTap: widget.logOut,
-          ),
-        ],
+
+            const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Divider()),
+
+            ListTile(
+              leading: const Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                        controller.locale.languageCode == 'vi'
+                            ? 'lang_vi'.tr
+                            : 'lang_en'.tr,
+                        style: const TextStyle(color: Colors.white)),
+                    const Icon(Icons.arrow_drop_down, color: Colors.white)
+                  ]),
+              onTap: () {
+                _showPopupMenu(
+                    (index) => {
+                          Get.find<LocalizationController>().setLanguage(Locale(
+                            AppConstants.languages[index].languageCode,
+                            AppConstants.languages[index].countryCode,
+                          ))
+                        },
+                    this.context);
+              },
+            ),
+
+            ListTile(
+              title: Text(
+                'about_us'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
+              leading: const Icon(
+                Icons.info,
+                color: Colors.white,
+              ),
+            ),
+            ListTile(
+              title: Text(
+                'logout'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
+              leading: const Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
+              onTap: widget.logOut,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -203,19 +194,20 @@ class DrawerState extends State<CustomDrawer> {
     widget.changePage(index);
   }
 
-  void _showPopupMenu(Function(int) onTap, BuildContext context) async {
+  void _showPopupMenu(
+      Function(int) changeLanguage, BuildContext context) async {
     await showMenu(
       context: context,
-      position: const RelativeRect.fromLTRB(120, 260, 100, 100),
+      position: const RelativeRect.fromLTRB(120, 460, 100, 100),
       items: [
         PopupMenuItem(
           value: 'lang_vi',
-          onTap: () => onTap(0),
+          onTap: () => changeLanguage(0),
           child: Text('lang_vi'.tr),
         ),
         PopupMenuItem(
           value: 'lang_en',
-          onTap: () => onTap(1),
+          onTap: () => changeLanguage(1),
           child: Text("lang_en".tr),
         ),
       ],

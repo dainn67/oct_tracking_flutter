@@ -1,6 +1,5 @@
 import 'package:timesheet/data/model/response/team.dart';
-
-import '../body/user.dart';
+import 'package:timesheet/data/model/response/user.dart';
 
 class Member {
   String createDate;
@@ -17,8 +16,8 @@ class Member {
   String level;
   String status;
   String dateJoin;
-  Team team;
-  UserBody user;
+  Team? team;
+  User user;
 
   Member({
     required this.createDate,
@@ -55,8 +54,8 @@ class Member {
       level: json['level'],
       status: json['status'],
       dateJoin: json['dateJoin'],
-      team: Team.fromJson(json['team']),
-      user: UserBody.fromJson(json['user']),
+      team: json['team'] != null ? Team.fromJson(json['team']) : null,
+      user: User.fromJson(json['user']),
     );
   }
 }

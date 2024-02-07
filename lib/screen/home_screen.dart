@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //RX variables, notify listeners to rebuild their UI whenever value change
   var index = 0.obs;
-  var title = "home".obs;
+  var title = "Home".obs;
 
   @override
   Widget build(BuildContext context) {

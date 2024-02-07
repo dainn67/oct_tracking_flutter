@@ -28,7 +28,7 @@ class _UserDetailState extends State<UserDetail> {
     return Center(
       child: Wrap(children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * (widget.user == null ? 0.8 : 0.45),
           width: MediaQuery.of(context).size.width * 0.9,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -64,22 +64,22 @@ class _UserDetailState extends State<UserDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildTitle('Username'),
-                        _buildTextField(context, widget.user?.username, 'name',
+                        _buildTextField(context, widget.user?.username ?? 'Enter username', 'name',
                             Images.lock, _nameController),
                         _buildTitle('Email'),
-                        _buildTextField(context, widget.user?.email, 'email',
+                        _buildTextField(context, widget.user?.email ?? 'Enter email', 'email',
                             Images.lock, _emailController),
                         if (widget.user == null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildTitle('Password'),
-                              _buildTextField(context, widget.user?.email,
+                              _buildTextField(context, 'Enter password',
                                   'password', Images.lock, _passwordController),
                               _buildTitle('Confirm password'),
                               _buildTextField(
                                   context,
-                                  widget.user?.email,
+                                  'Enter password',
                                   'password',
                                   Images.lock,
                                   _confirmPassController),
@@ -104,7 +104,7 @@ class _UserDetailState extends State<UserDetail> {
                   ),
                 ),
               )),
-              if (widget.user != null)
+              if (widget.user == null)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -209,7 +209,7 @@ class _UserDetailState extends State<UserDetail> {
       String imgPath, TextEditingController controller) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      height: 60,
+      height: 50,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14), color: Colors.grey.shade200),
       child: Container(
@@ -242,42 +242,50 @@ class _UserDetailState extends State<UserDetail> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Checkbox(
                     value: widget.user!.roles!.contains('ROLE_ADMIN'),
                     onChanged: (bool? newValue) {}),
-                Text('Admin')
+                const Text('Admin')
               ],
             ),
-            Row(
-              children: [
-                Checkbox(
-                    value: widget.user!.roles!.contains('ROLE_ACCOUNTANT'),
-                    onChanged: (bool? newValue) {}),
-                Text('Accountant')
-              ],
+            SizedBox(
+              width: 160,
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: widget.user!.roles!.contains('ROLE_ACCOUNTANT'),
+                      onChanged: (bool? newValue) {}),
+                  const Text('Accountant')
+                ],
+              ),
             ),
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Checkbox(
                     value: widget.user!.roles!.contains('ROLE_MANAGER'),
                     onChanged: (bool? newValue) {}),
-                Text('Manager')
+                const Text('Manager')
               ],
             ),
-            Row(
-              children: [
-                Checkbox(
-                    value: widget.user!.roles!.contains('ROLE_STAFF'),
-                    onChanged: (bool? newValue) {}),
-                Text('Staff')
-              ],
+            SizedBox(
+              width: 160,
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: widget.user!.roles!.contains('ROLE_STAFF'),
+                      onChanged: (bool? newValue) {}),
+                  const Text('Staff')
+                ],
+              ),
             ),
           ],
         ),

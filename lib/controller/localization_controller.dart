@@ -26,11 +26,7 @@ class LocalizationController extends GetxController implements GetxService {
   void setLanguage(Locale locale) {
     Get.updateLocale(locale);
     _locale = locale;
-    if(_locale.languageCode == 'ar') {
-      _isLtr = false;
-    }else {
-      _isLtr = true;
-    }
+    _isLtr = _locale.languageCode != 'ar';
     saveLanguage(_locale);
     update();
   }
