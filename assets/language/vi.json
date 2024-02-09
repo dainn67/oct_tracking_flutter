@@ -1009,5 +1009,7 @@
   "project": "Dự án",
   "personnel": "Nhân sự",
   "user": "Người dùng",
-  "logout": "Đăng xuất"
+  "logout": "Đăng xuất",
+  "page": "Trang",
+  "page_size": "Số lượng"
 }

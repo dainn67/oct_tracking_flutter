@@ -29,10 +29,10 @@ class TrackingController extends GetxController implements GetxService {
   int _pageSize = 10;
   int _maxPages = -1;
 
-  List<String> _teamNameList = [''];
+  final List<String> _teamNameList = [''];
   List<Team> _teamList = [];
 
-  List<String> _memberNameList = [''];
+  final List<String> _memberNameList = [''];
   List<Member> _memberList = [];
 
   List<WorkingDay> _workingDayList = [];
@@ -56,7 +56,7 @@ class TrackingController extends GetxController implements GetxService {
   String get selectedTeam => _selectedTeam;
   set selectedTeam(String newTeamName) {
     _selectedTeam = newTeamName;
-    if(newTeamName == ' None') {
+    if(newTeamName == 'None') {
       _selectedTeamId = null;
     } else {
       _selectedTeamId = _teamList.firstWhere((element) => element.name == newTeamName).id;
@@ -68,7 +68,7 @@ class TrackingController extends GetxController implements GetxService {
   String get selectedMember => _selectedMember;
   set selectedMember(String newMemberName) {
     _selectedMember = newMemberName;
-    if(newMemberName == ' None') {
+    if(newMemberName == 'None') {
       _selectedMemberId = null;
     } else {
       _selectedMemberId = _memberList.firstWhere((element) => element.name == newMemberName).id;
@@ -147,7 +147,7 @@ class TrackingController extends GetxController implements GetxService {
       _teamList = apiResponse.data.content as List<Team>;
 
       _teamNameList.clear();
-      _teamNameList.add(' None');
+      _teamNameList.add('None');
       _teamNameList.addAll(_teamList.map((team) => team.name).toList());
 
       _selectedTeam = _teamNameList[0];
@@ -155,11 +155,7 @@ class TrackingController extends GetxController implements GetxService {
       _loading = false;
       update();
       return apiResponse.code;
-    } else {
-      if (kDebugMode) {
-        print('TEAM NAME FAIL: $response');
-      }
-    }
+    } else if (kDebugMode) print('TEAM NAME FAIL: $response');
 
     _loading = false;
     update();
@@ -176,7 +172,7 @@ class TrackingController extends GetxController implements GetxService {
       _memberList = apiResponse.data.content as List<Member>;
 
       _memberNameList.clear();
-      _memberNameList.add(' None');
+      _memberNameList.add('None');
       _memberNameList.addAll(_memberList.map((member) => member.name).toList());
 
       _selectedMember = _memberNameList[0];

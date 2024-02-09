@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
 import '../controller/localization_controller.dart';
+import '../controller/tracking_controller.dart';
 import '../utils/app_constants.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -16,11 +17,6 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class DrawerState extends State<CustomDrawer> {
-  // DrawerState();
-
-  List<String> _langs = ["lang_vi", "lang_en"];
-  var _lang = "lang_vi".obs;
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -78,7 +74,7 @@ class DrawerState extends State<CustomDrawer> {
                 style: const TextStyle(color: Colors.white),
               ),
               onTap: () {
-                widget.changePage('home');
+                widget.changePage('tracking');
               },
             ),
             ListTile(
@@ -91,7 +87,7 @@ class DrawerState extends State<CustomDrawer> {
                 color: Colors.white,
               ),
               onTap: () {
-                widget.changePage('Project');
+                widget.changePage('project');
               },
             ),
             ListTile(
@@ -104,7 +100,7 @@ class DrawerState extends State<CustomDrawer> {
                 color: Colors.white,
               ),
               onTap: () {
-                widget.changePage('Personnel');
+                widget.changePage('personnel');
               },
             ),
             ListTile(
@@ -117,7 +113,7 @@ class DrawerState extends State<CustomDrawer> {
                 color: Colors.white,
               ),
               onTap: () {
-                widget.changePage('User');
+                widget.changePage('user');
               },
             ),
 
@@ -179,21 +175,6 @@ class DrawerState extends State<CustomDrawer> {
     );
   }
 
-  List<String> listCCDC() {
-    return [
-      'Danh sách CCDC',
-      'Cấp phát CCDC',
-      'Điều chuyển CCDC',
-      'Kiểm kê CCDC',
-      'Thanh lý CCDC',
-      'CCDC chuyển đi'
-    ];
-  }
-
-  void onItemClick(String index) {
-    widget.changePage(index);
-  }
-
   void _showPopupMenu(
       Function(int) changeLanguage, BuildContext context) async {
     await showMenu(
@@ -202,12 +183,18 @@ class DrawerState extends State<CustomDrawer> {
       items: [
         PopupMenuItem(
           value: 'lang_vi',
-          onTap: () => changeLanguage(0),
+          onTap: () {
+            changeLanguage(0);
+            widget.changePage('tracking');
+          },
           child: Text('lang_vi'.tr),
         ),
         PopupMenuItem(
           value: 'lang_en',
-          onTap: () => changeLanguage(1),
+          onTap: () {
+            changeLanguage(1);
+            widget.changePage('tracking');
+          },
           child: Text("lang_en".tr),
         ),
       ],

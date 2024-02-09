@@ -104,7 +104,7 @@ class _UserScreenState extends State<UserScreen> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Row(
                       children: [
-                        Text('Size',
+                        Text('page_size'.tr,
                             style: TextStyle(
                                 color: Colors.grey.shade500,
                                 fontWeight: FontWeight.bold)),
@@ -143,7 +143,7 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text('Page ${controller.pageIndex}',
+                        Text('${'page'.tr} ${controller.pageIndex}',
                             style: TextStyle(
                                 color: Colors.grey.shade500,
                                 fontWeight: FontWeight.bold)),

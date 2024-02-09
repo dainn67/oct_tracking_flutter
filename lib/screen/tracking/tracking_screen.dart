@@ -8,14 +8,14 @@ import 'package:timesheet/utils/app_constants.dart';
 import '../../data/model/response/work_day.dart';
 import '../common/CommonFunction.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({super.key});
+class TrackingScreen extends StatefulWidget {
+  const TrackingScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _StartScreenState();
+  State<StatefulWidget> createState() => _TrackingScreenState();
 }
 
-class _StartScreenState extends State<StartScreen> {
+class _TrackingScreenState extends State<TrackingScreen> {
   @override
   void initState() {
     super.initState();
@@ -105,6 +105,7 @@ class _StartScreenState extends State<StartScreen> {
                           fontWeight: FontWeight.bold)),
                   Container(
                     width: 150,
+                    padding: const EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                         color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(10)),
@@ -143,6 +144,7 @@ class _StartScreenState extends State<StartScreen> {
                           fontWeight: FontWeight.bold)),
                   Container(
                     width: 150,
+                    padding: const EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                         color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(10)),
@@ -157,6 +159,7 @@ class _StartScreenState extends State<StartScreen> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
+                              print(newValue);
                               if (newValue != null) {
                                 controller.selectedMember = newValue;
                               }
@@ -243,7 +246,7 @@ class _StartScreenState extends State<StartScreen> {
               padding: const EdgeInsets.only(left: 10),
               child: Row(
                 children: [
-                  Text('Page size',
+                  Text('page_size'.tr,
                       style: TextStyle(
                           color: Colors.grey.shade500,
                           fontWeight: FontWeight.bold)),
@@ -282,7 +285,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text('Page ${controller.pageIndex}',
+                  Text('${'page'.tr} ${controller.pageIndex}',
                       style: TextStyle(
                           color: Colors.grey.shade500,
                           fontWeight: FontWeight.bold)),

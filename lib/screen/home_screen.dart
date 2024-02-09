@@ -4,9 +4,10 @@ import 'package:timesheet/screen/personnel/personnel_screen.dart';
 import 'package:timesheet/screen/project/project_screen.dart';
 import 'package:timesheet/screen/user/user_screen.dart';
 import '../controller/auth_controller.dart';
+import '../controller/tracking_controller.dart';
 import '../helper/route_helper.dart';
 import '../widgets/drawer.dart';
-import 'tracking/start_screen.dart';
+import 'tracking/tracking_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> widgetList = [
-    const StartScreen(),
+    const TrackingScreen(),
     const ProjectScreen(),
     const PersonnelScreen(),
     const UserScreen(),
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //RX variables, notify listeners to rebuild their UI whenever value change
   var index = 0.obs;
-  var title = "Home".obs;
+  var title = "Tracking".obs;
 
   @override
   Widget build(BuildContext context) {
@@ -63,25 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
     navigator?.pop(context);
     title.value = s.tr;
     switch (s) {
-      case 'home':
-        {
+      case 'tracking':
           index.value = 0;
-          break;
-        }
-      case 'Project':
-        {
+      case 'project':
           index.value = 1;
-          break;
-        }
-      case 'Personnel':
-        {
+      case 'personnel':
           index.value = 2;
-          break;
-        }
-      case 'User':
-        {
+      case 'user':
           index.value = 3;
-        }
     }
   }
 }

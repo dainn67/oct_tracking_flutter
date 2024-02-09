@@ -786,5 +786,7 @@
   "project": "Project",
   "personnel": "Personnel",
   "user": "User",
-  "logout": "Log out"
+  "logout": "Log out",
+  "page": "Page",
+  "page_size": "Page size"
 }

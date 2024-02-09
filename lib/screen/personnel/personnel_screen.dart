@@ -64,7 +64,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                     controller.pageCategory == 0
                         ? _mainTeamListBox(controller)
                         : _mainMemberListBox(controller),
-                    _teamDisplayOptions(controller)
+                    _displayOptions(controller)
                   ],
                 ),
               ),
@@ -180,7 +180,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
     );
   }
 
-  _teamDisplayOptions(PersonnelController controller) {
+  _displayOptions(PersonnelController controller) {
     return Container(
       height: 60,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -208,7 +208,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                 padding: const EdgeInsets.only(left: 10),
                 child: Row(
                   children: [
-                    Text('Size',
+                    Text('page_size'.tr,
                         style: TextStyle(
                             color: Colors.grey.shade500,
                             fontWeight: FontWeight.bold)),
@@ -251,7 +251,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('Page ${controller.pageIndex}',
+                    Text('${'page'.tr} ${controller.pageIndex}',
                         style: TextStyle(
                             color: Colors.grey.shade500,
                             fontWeight: FontWeight.bold)),

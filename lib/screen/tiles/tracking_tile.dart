@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:timesheet/data/model/response/Task.dart';
 import 'package:timesheet/data/model/response/work_day.dart';
 import '../../utils/images.dart';
+import 'package:get/get.dart';
+import 'dart:core';
 
 class TrackingTile extends StatelessWidget {
   final WorkingDay workingDay;
@@ -51,8 +53,8 @@ class TrackingTile extends StatelessWidget {
                               style: const TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold))
-                          : const Text('No event',
-                              style: TextStyle(
+                          : Text('no_event'.tr,
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold)),
                       if (workingDay.tasks != null &&
