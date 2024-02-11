@@ -12,6 +12,8 @@ class ProjectController extends GetxController implements GetxService {
 
   ProjectController({required this.repo, required this.sharedPreferences});
 
+  String selectedStatus = '';
+
   bool _loading = false;
   int _pageIndex = 1;
   int _pageSize = 10;
@@ -70,11 +72,11 @@ class ProjectController extends GetxController implements GetxService {
     }
   }
 
-  Future<void> addNewProject(String name, String code, String status, String desc) async {
+  Future<void> addNewProject(String name, String code, String desc) async {
     _loading = true;
     update();
 
-    Response response = await repo.addNewProject(name, code, status, desc);
+    Response response = await repo.addNewProject(name, code, selectedStatus, desc);
     if (response.statusCode == 200) {
       getProjectList();
     } else {
@@ -89,11 +91,11 @@ class ProjectController extends GetxController implements GetxService {
   }
 
   Future<void> updateProject(
-      String id, String code, String name, String desc, String status) async {
+      String id, String code, String name, String desc) async {
     _loading = true;
     update();
 
-    Response response = await repo.updateProject(id, code, name, desc, status);
+    Response response = await repo.updateProject(id, code, name, desc, selectedStatus);
     if (response.statusCode == 200) {
       getProjectList();
     } else {

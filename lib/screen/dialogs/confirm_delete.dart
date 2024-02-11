@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ConfirmDelete extends StatelessWidget {
   final VoidCallback callback;
@@ -8,21 +9,21 @@ class ConfirmDelete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Confirm Action'),
-      content: const Text('Are you sure you want to perform this action?'),
+      title: Text('confirm_action'.tr),
+      content: Text('delete_action'.tr),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
         TextButton(
           onPressed: () {
             callback();
             Navigator.pop(context);
           },
-          child: const Text('Confirm'),
+          child: Text('confirm'.tr),
         ),
       ],
     );

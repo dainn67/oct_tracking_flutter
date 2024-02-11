@@ -207,13 +207,14 @@ class ApiClient extends GetxService {
   }
 
   Response handleResponse(Http.Response receivedResponse, String uri) {
+    final decodedBody = utf8.decode(receivedResponse.bodyBytes, allowMalformed: true);
     dynamic body;
     try {
-      body = jsonDecode(receivedResponse.body);
+      body = jsonDecode(decodedBody);
     } catch (e) {}
 
     Response response = Response(
-      body: body ?? receivedResponse.body,
+      body: body,
       bodyString: receivedResponse.body.toString(),
       request: Request(
           headers: receivedResponse.request!.headers,

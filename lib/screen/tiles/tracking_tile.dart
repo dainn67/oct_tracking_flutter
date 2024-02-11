@@ -59,7 +59,7 @@ class TrackingTile extends StatelessWidget {
                                   fontWeight: FontWeight.bold)),
                       if (workingDay.tasks != null &&
                           workingDay.dayOff == false)
-                        Text('${workingDay.tasks!.length} task done',
+                        Text('${workingDay.tasks!.length} ${'task_done'.tr}',
                             style: const TextStyle(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold)),
@@ -183,15 +183,15 @@ class TrackingTile extends StatelessWidget {
                         child: Image.asset(Images.office_hour),
                       ),
                       const SizedBox(width: 10),
-                      const Text(
-                        'Office',
-                        style: TextStyle(
+                      Text(
+                        'office_hour'.tr,
+                        style: const TextStyle(
                             color: Colors.green, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
                   Text(
-                      '${task.officeHour} ${task.officeHour == 1 ? 'hour' : 'hours'}')
+                      '${task.officeHour} ${'hours'.tr}')
                 ],
               ),
               const SizedBox(height: 30),
@@ -208,14 +208,14 @@ class TrackingTile extends StatelessWidget {
                         child: Image.asset(Images.overtime_hour),
                       ),
                       const SizedBox(width: 10),
-                      const Text('Overtime',
-                          style: TextStyle(
+                      Text('overtime_hour'.tr,
+                          style: const TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
                   Text(
-                      '${task.overtimeHour} ${task.overtimeHour == 1 ? 'hour' : 'hours'}')
+                      '${task.overtimeHour} ${'hours'.tr}')
                 ],
               ),
               const SizedBox(height: 30),

@@ -177,7 +177,7 @@ class _UserScreenState extends State<UserScreen> {
                           context: context,
                           builder: (context) => const UserDetail());
                     },
-                    child: const Text('Add new'))),
+                    child: Text('add_new'.tr))),
           ],
         ),
       ),

@@ -20,7 +20,6 @@ class _TeamDetailState extends State<TeamDetail> {
 
   @override
   Widget build(BuildContext context) {
-
     return Center(
       child: Wrap(children: [
         Container(
@@ -28,13 +27,12 @@ class _TeamDetailState extends State<TeamDetail> {
           width: MediaQuery.of(context).size.width * 0.9,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white),
+              borderRadius: BorderRadius.circular(10), color: Colors.white),
           child: Column(
             children: [
               Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 50, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
@@ -51,39 +49,34 @@ class _TeamDetailState extends State<TeamDetail> {
                   )),
               Expanded(
                   child: Material(
-                    child: Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildTitle('Team name'),
-                          _buildTextField(context, widget.team.name, 'name',
-                              Images.lock, _nameController),
-                          _buildTitle('Team code'),
-                          _buildTextField(context, widget.team.code, 'code',
-                              Images.lock, _codeController),
-                          _buildTitle('Team description'),
-                          _buildTextField(context, widget.team.description,
-                              'desc', Images.lock, _descController)
-                        ],
-                      ),
-                    ),
-                  )),
+                child: Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitle('name'.tr),
+                      _buildTextField(context, widget.team.name, 'name',
+                          Images.lock, _nameController),
+                      _buildTitle('code'.tr),
+                      _buildTextField(context, widget.team.code, 'code',
+                          Images.lock, _codeController),
+                      _buildTitle('desc'.tr),
+                      _buildTextField(context, widget.team.description, 'desc',
+                          Images.lock, _descController)
+                    ],
+                  ),
+                ),
+              )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel')),
+                      child: Text('cancel'.tr)),
                   const SizedBox(width: 15),
-                  ElevatedButton(
-                      onPressed: () {
-                        _update();
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Update')),
+                  ElevatedButton(onPressed: _update, child: Text('update'.tr)),
                 ],
               )
             ],
@@ -94,13 +87,25 @@ class _TeamDetailState extends State<TeamDetail> {
   }
 
   _update() {
-    Get.find<PersonnelController>().updateTeam(
-        widget.team.id,
-        _codeController.text.isEmpty ? widget.team.code : _codeController.text,
-        _nameController.text.isEmpty ? widget.team.name : _nameController.text,
-        _descController.text.isEmpty
-            ? widget.team.description
-            : _descController.text);
+    if (_nameController.text.isNotEmpty ||
+        _codeController.text.isNotEmpty ||
+        _descController.text.isNotEmpty) {
+      Get.find<PersonnelController>().updateTeam(
+          widget.team.id,
+          _codeController.text.isEmpty
+              ? widget.team.code
+              : _codeController.text,
+          _nameController.text.isEmpty
+              ? widget.team.name
+              : _nameController.text,
+          _descController.text.isEmpty
+              ? widget.team.description
+              : _descController.text);
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Finish all information')));
+    }
   }
 
   _buildTextField(BuildContext context, String? hint, String type,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/controller/personnel_controller.dart';
 import 'package:timesheet/data/model/response/member.dart';
+import 'package:timesheet/screen/common/CommonFunction.dart';
 import 'package:timesheet/utils/app_constants.dart';
 import '../../utils/images.dart';
 
@@ -69,10 +70,10 @@ class _MemberDetailState extends State<MemberDetail> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildTitle('Member name'),
+                      _buildTitle('name'.tr),
                       _buildTextField(context, widget.member.name, 'name',
                           Images.lock, _nameController),
-                      _buildTitle('Member email'),
+                      _buildTitle('email'.tr),
                       _buildTextField(context, widget.member.email, 'email',
                           Images.lock, _emailController),
                       const SizedBox(height: 10),
@@ -81,11 +82,10 @@ class _MemberDetailState extends State<MemberDetail> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildTitle('Date joined'),
+                            _buildTitle('date_joined'.tr),
                             Text(widget.member.dateJoin,
                                 style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.green)),
+                                    fontSize: 18, color: Colors.green)),
                           ],
                         ),
                       ),
@@ -95,27 +95,26 @@ class _MemberDetailState extends State<MemberDetail> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildTitle('Member code'),
+                            _buildTitle('code'.tr),
                             Text(widget.member.code,
                                 style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.green)),
+                                    fontSize: 18, color: Colors.green)),
                           ],
                         ),
                       ),
                       const SizedBox(height: 10),
-                      _buildDropdownButton('Member position', 'position',
-                          AppConstants.positionList),
                       _buildDropdownButton(
-                          'Member gender', 'gender', AppConstants.genderList),
+                          'position'.tr, 'position', AppConstants.positionList),
                       _buildDropdownButton(
-                          'Member type', 'type', AppConstants.typeList),
+                          'gender'.tr, 'gender', AppConstants.genderList),
                       _buildDropdownButton(
-                          'Member status', 'status', AppConstants.statusList),
-                      _buildDropdownButton('Team', 'team',
+                          'type'.tr, 'type', AppConstants.typeList),
+                      _buildDropdownButton(
+                          'status'.tr, 'status', AppConstants.statusList),
+                      _buildDropdownButton('team'.tr, 'team',
                           Get.find<PersonnelController>().teamNameList),
-                      _buildDropdownButton('Member skill level', 'skill',
-                          AppConstants.skillList),
+                      _buildDropdownButton(
+                          'skill_level'.tr, 'skill', AppConstants.skillList),
                     ],
                   ),
                 ),
@@ -125,14 +124,13 @@ class _MemberDetailState extends State<MemberDetail> {
                 children: [
                   ElevatedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel')),
+                      child: Text('cancel'.tr)),
                   const SizedBox(width: 15),
                   ElevatedButton(
                       onPressed: () {
                         _updateMember();
-                        Navigator.pop(context);
                       },
-                      child: const Text('Update')),
+                      child: Text('update'.tr)),
                 ],
               )
             ],
@@ -143,24 +141,44 @@ class _MemberDetailState extends State<MemberDetail> {
   }
 
   _updateMember() {
-    Get.find<PersonnelController>().updateMember(
-        widget.member.id,
-        widget.member.code,
-        widget.member.dateJoin,
-        _emailController.text.isEmpty
-            ? widget.member.email
-            : _emailController.text,
-        selectedGender,
-        selectedLevel,
-        _nameController.text.isEmpty
-            ? widget.member.name
-            : _nameController.text,
-        selectedPosition,
-        selectedStatus,
-        selectedTeamName,
-        selectedType);
+    if (_nameController.text.isNotEmpty ||
+        (_emailController.text.isNotEmpty && isEmailValid(_emailController.text))||
+        selectedPosition != widget.member.position.replaceAll('_', ' ') ||
+        selectedGender != widget.member.gender ||
+        selectedType != widget.member.type.replaceAll('_', ' ') ||
+        selectedStatus != widget.member.status ||
+        selectedTeamName != widget.member.team!.name ||
+        selectedLevel != widget.member.level
+    ) {
+      Get.find<PersonnelController>().updateMember(
+          widget.member.id,
+          widget.member.code,
+          widget.member.dateJoin,
+          _emailController.text.isEmpty
+              ? widget.member.email
+              : _emailController.text,
+          selectedGender,
+          selectedLevel,
+          _nameController.text.isEmpty
+              ? widget.member.name
+              : _nameController.text,
+          selectedPosition,
+          selectedStatus,
+          selectedTeamName,
+          selectedType);
+      Navigator.pop(context);
+    } else {
+      if(_emailController.text.isNotEmpty && !isEmailValid(_emailController.text)){
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid email format')));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('There is no change')));
+      }
+    }
   }
 
+  //Local utils
   _buildTextField(BuildContext context, String? hint, String type,
       String imgPath, TextEditingController controller) {
     return Container(
@@ -201,38 +219,40 @@ class _MemberDetailState extends State<MemberDetail> {
         children: [
           _buildTitle(title),
           SizedBox(
-            width: 150,
-            child: DropdownButton(
+              width: 150,
+              child: DropdownButton(
                 isExpanded: true,
                 value: _getCorrespondingValue(valueType),
                 items: items
                     .map<DropdownMenuItem<String>>((item) =>
                         DropdownMenuItem(value: item, child: Text(item)))
                     .toList(),
-                onChanged: (newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      switch (valueType) {
-                        case 'position':
-                          selectedPosition = newValue;
-                        case 'gender':
-                          selectedGender = newValue;
-                        case 'type':
-                          selectedType = newValue;
-                        case 'status':
-                          selectedStatus = newValue;
-                        case 'skill':
-                          selectedLevel = newValue;
-                        case 'team':
-                          selectedTeamName = newValue;
-                      }
-                    });
-                  }
+                onChanged: (newValue) => setState(() {
+                  _setCorrespondingValue(valueType, newValue);
                 }),
-          ),
+              )),
         ],
       ),
     );
+  }
+
+  void _setCorrespondingValue(String valueType, String? newValue) {
+    if (newValue != null) {
+      switch (valueType) {
+        case 'position':
+          selectedPosition = newValue;
+        case 'gender':
+          selectedGender = newValue;
+        case 'type':
+          selectedType = newValue;
+        case 'status':
+          selectedStatus = newValue;
+        case 'skill':
+          selectedLevel = newValue;
+        case 'team':
+          selectedTeamName = newValue;
+      }
+    }
   }
 
   String _getCorrespondingValue(String type) {

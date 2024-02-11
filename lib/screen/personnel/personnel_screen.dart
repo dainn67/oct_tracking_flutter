@@ -129,7 +129,7 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Team filter', style: TextStyle(fontWeight: FontWeight.bold),),
+            Text('team_filter'.tr, style: const TextStyle(fontWeight: FontWeight.bold),),
             GetBuilder<PersonnelController>(
               builder: (controller) => DropdownButton(
                   value: Get.find<PersonnelController>().selectedTeamName,

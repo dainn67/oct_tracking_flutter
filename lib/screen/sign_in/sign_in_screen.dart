@@ -44,27 +44,27 @@ class _SignInScreenState extends State<SignInScreen> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: reusableText("Email"),
+                                    child: reusableText("email".tr),
                                   ),
                                   buildTextField(
                                       context,
-                                      "Enter username",
+                                      "enter_username".tr,
                                       "username",
                                       Images.user,
                                       _usernameController),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: reusableText("Password"),
+                                    child: reusableText("password".tr),
                                   ),
                                   buildTextField(
                                       context,
-                                      "Enter password",
+                                      "enter_pass".tr,
                                       "password",
                                       Images.lock,
                                       _passwordController),
                                   const SizedBox(height: 30),
-                                  buildButton("Sign In", "signin", _login),
-                                  buildButton("Register", "toregister", () {}),
+                                  buildButton("sign_in".tr, "signin", _login),
+                                  buildButton("register".tr, "toregister", () {}),
                                   _forgetPassword(),
                                 ],
                               ),
@@ -153,10 +153,10 @@ class _SignInScreenState extends State<SignInScreen> {
       height: 44,
       child: GestureDetector(
         onTap: () {},
-        child: const Center(
+        child: Center(
           child: Text(
-            "Forget you password",
-            style: TextStyle(
+            "forget_password".tr,
+            style: const TextStyle(
                 decoration: TextDecoration.underline,
                 color: Colors.black,
                 fontSize: 12,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/controller/user_controller.dart';
 import 'package:timesheet/data/model/response/user.dart';
-import '../../controller/project_controller.dart';
+import 'package:timesheet/screen/common/CommonFunction.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/images.dart';
 
@@ -28,7 +28,8 @@ class _UserDetailState extends State<UserDetail> {
     return Center(
       child: Wrap(children: [
         Container(
-          height: MediaQuery.of(context).size.height * (widget.user == null ? 0.8 : 0.45),
+          height: MediaQuery.of(context).size.height *
+              (widget.user == null ? 0.8 : 0.45),
           width: MediaQuery.of(context).size.width * 0.9,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -46,7 +47,7 @@ class _UserDetailState extends State<UserDetail> {
                       color: Colors.lightBlueAccent),
                   child: Center(
                     child: Text(
-                      widget.user?.username ?? 'New user',
+                      widget.user?.username ?? 'new_user'.tr,
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -63,23 +64,31 @@ class _UserDetailState extends State<UserDetail> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildTitle('Username'),
-                        _buildTextField(context, widget.user?.username ?? 'Enter username', 'name',
-                            Images.lock, _nameController),
-                        _buildTitle('Email'),
-                        _buildTextField(context, widget.user?.email ?? 'Enter email', 'email',
-                            Images.lock, _emailController),
+                        _buildTitle('username'.tr),
+                        _buildTextField(
+                            context,
+                            widget.user?.username ?? 'enter_username'.tr,
+                            'name',
+                            Images.lock,
+                            _nameController),
+                        _buildTitle('email'.tr),
+                        _buildTextField(
+                            context,
+                            widget.user?.email ?? 'enter_email'.tr,
+                            'email',
+                            Images.lock,
+                            _emailController),
                         if (widget.user == null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildTitle('Password'),
-                              _buildTextField(context, 'Enter password',
+                              _buildTitle('password'.tr),
+                              _buildTextField(context, 'enter_pass'.tr,
                                   'password', Images.lock, _passwordController),
-                              _buildTitle('Confirm password'),
+                              _buildTitle('confirm_pass'.tr),
                               _buildTextField(
                                   context,
-                                  'Enter password',
+                                  'confirm_pass_hint'.tr,
                                   'password',
                                   Images.lock,
                                   _confirmPassController),
@@ -88,12 +97,12 @@ class _UserDetailState extends State<UserDetail> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _buildTitle('Gender'),
+                                  _buildTitle('gender'.tr),
                                   _buildGenderOptions()
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              _buildTitle('Role'),
+                              _buildTitle('role'.tr),
                               _buildRoleOptions()
                             ],
                           )
@@ -110,14 +119,12 @@ class _UserDetailState extends State<UserDetail> {
                   children: [
                     ElevatedButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('Cancel')),
+                        child: Text('cancel'.tr)),
                     const SizedBox(width: 15),
                     ElevatedButton(
-                        onPressed: () {
-                          _addNew();
-                          Navigator.pop(context);
-                        },
-                        child: Text(widget.user != null ? 'Update' : 'Add')),
+                        onPressed: _addNew,
+                        child:
+                            Text(widget.user != null ? 'update'.tr : 'add'.tr)),
                   ],
                 )
             ],
@@ -128,10 +135,39 @@ class _UserDetailState extends State<UserDetail> {
   }
 
   _addNew() {
-    Get.find<UserController>().addUser(_nameController.text,
-        _emailController.text, _passwordController.text, selectedGender, roles);
+    if (_nameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        _confirmPassController.text.isNotEmpty &&
+        _passwordController.text == _confirmPassController.text &&
+        isEmailValid(_emailController.text) &&
+        roles.contains(true)) {
+      Get.find<UserController>().addUser(
+          _nameController.text,
+          _emailController.text,
+          _passwordController.text,
+          selectedGender,
+          roles);
+      Navigator.pop(context);
+    } else {
+      if (_emailController.text.isNotEmpty &&
+          !isEmailValid(_emailController.text)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid email format')));
+      } else if (_passwordController.text != _confirmPassController.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Wrong confirm password')));
+      } else if (!roles.contains(true)) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Select roles')));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Fill in all fields')));
+      }
+    }
   }
 
+  //Local utils
   _buildGenderOptions() {
     return StatefulBuilder(
       builder: (context, setState) => Wrap(children: [
@@ -166,7 +202,7 @@ class _UserDetailState extends State<UserDetail> {
     return Column(
       children: [
         CheckboxListTile(
-          title: const Text('Admin'),
+          title: Text('admin'.tr),
           value: roles[0],
           onChanged: (bool? value) {
             setState(() {
@@ -175,7 +211,7 @@ class _UserDetailState extends State<UserDetail> {
           },
         ),
         CheckboxListTile(
-          title: const Text('Accountant'),
+          title: Text('accountant'.tr),
           value: roles[1],
           onChanged: (bool? value) {
             setState(() {
@@ -184,7 +220,7 @@ class _UserDetailState extends State<UserDetail> {
           },
         ),
         CheckboxListTile(
-          title: const Text('Manager'),
+          title: Text('manager'.tr),
           value: roles[2],
           onChanged: (bool? value) {
             setState(() {
@@ -193,7 +229,7 @@ class _UserDetailState extends State<UserDetail> {
           },
         ),
         CheckboxListTile(
-          title: const Text('Staff'),
+          title: Text('staff'.tr),
           value: roles[3],
           onChanged: (bool? value) {
             setState(() {
@@ -207,6 +243,8 @@ class _UserDetailState extends State<UserDetail> {
 
   _buildTextField(BuildContext context, String? hint, String type,
       String imgPath, TextEditingController controller) {
+    String? errorText;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       height: 50,
@@ -215,6 +253,7 @@ class _UserDetailState extends State<UserDetail> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TextField(
+          enabled: widget.user == null,
           controller: controller,
           onChanged: (value) {},
           obscureText: type == "password",
@@ -249,7 +288,7 @@ class _UserDetailState extends State<UserDetail> {
                 Checkbox(
                     value: widget.user!.roles!.contains('ROLE_ADMIN'),
                     onChanged: (bool? newValue) {}),
-                const Text('Admin')
+                Text('admin'.tr)
               ],
             ),
             SizedBox(
@@ -259,7 +298,7 @@ class _UserDetailState extends State<UserDetail> {
                   Checkbox(
                       value: widget.user!.roles!.contains('ROLE_ACCOUNTANT'),
                       onChanged: (bool? newValue) {}),
-                  const Text('Accountant')
+                  Text('accountant'.tr)
                 ],
               ),
             ),
@@ -273,7 +312,7 @@ class _UserDetailState extends State<UserDetail> {
                 Checkbox(
                     value: widget.user!.roles!.contains('ROLE_MANAGER'),
                     onChanged: (bool? newValue) {}),
-                const Text('Manager')
+                Text('manager'.tr)
               ],
             ),
             SizedBox(
@@ -283,7 +322,7 @@ class _UserDetailState extends State<UserDetail> {
                   Checkbox(
                       value: widget.user!.roles!.contains('ROLE_STAFF'),
                       onChanged: (bool? newValue) {}),
-                  const Text('Staff')
+                  Text('staff'.tr)
                 ],
               ),
             ),

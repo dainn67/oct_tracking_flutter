@@ -178,7 +178,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                           context: context,
                           builder: (context) => const ProjectDetail());
                     },
-                    child: const Text('Add new'))),
+                    child: Text('add_new'.tr))),
           ],
         ),
       ),
