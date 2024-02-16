@@ -818,5 +818,14 @@
   "staff": "Staff",
   "confirm_action": "Confirm action",
   "delete_action": "Are you sure you want to perform this action ?",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+
+  "invalid_email": "Invalid email format",
+  "no_change": "There is no change",
+  "invalid_email_detail": "You entered invalid email format",
+  "no_change_detail": "No information has been changed",
+  "missing_info": "Missing information",
+  "missing_info_detail": "Finish all required information",
+  "unmatch_password": "Wrong confirm password",
+  "unmatch_password_detail": "Your password and confirm password not match"
 }

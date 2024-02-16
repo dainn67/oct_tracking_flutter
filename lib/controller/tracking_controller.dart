@@ -117,7 +117,6 @@ class TrackingController extends GetxController implements GetxService {
       Response response = await repo.getWorkingDayList(
           _fromDate, _toDate, _pageIndex, _pageSize, teamId: _selectedTeamId, memberId: _selectedMemberId);
       if (response.statusCode == 200) {
-        print('HERE: ${response.body}');
         ApiResponse apiResponse = ApiResponse.fromJson(response.body);
         _workingDayList = apiResponse.data.content as List<WorkingDay>;
         _maxPages = apiResponse.data.totalPages;

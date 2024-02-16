@@ -1039,5 +1039,14 @@
   "staff": "Nhân viên",
   "confirm_action": "Xác nhận",
   "delete_action": "Bạn có muốn thực hiện hành động này ?",
-  "confirm": "Xác nhận"
+  "confirm": "Xác nhận",
+
+  "invalid_email": "Email không hợp lệ",
+  "no_change": "Không có thay đổi",
+  "invalid_email_detail": "Bạn nhập sai cú pháp email",
+  "no_change_detail": "Bạn chưa thay đổi thông tin nào",
+  "missing_info": "Không đủ thông tin",
+  "missing_info_detail": "Bạn cần nhập đầy đủ thông tin",
+  "unmatch_password": "Sai mật khẩu",
+  "unmatch_password_detail": "Xác nhận mật khẩu không khớp"
 }

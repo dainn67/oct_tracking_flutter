@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timesheet/controller/personnel_controller.dart';
 import 'package:timesheet/data/model/response/team.dart';
+import 'package:timesheet/screen/common/CommonWidgets.dart';
 import '../../utils/images.dart';
 
 class TeamDetail extends StatefulWidget {
@@ -103,8 +104,7 @@ class _TeamDetailState extends State<TeamDetail> {
               : _descController.text);
       Navigator.pop(context);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Finish all information')));
+      showAlertDialog(context, 'no_change'.tr, 'no_change_detail'.tr);
     }
   }
 

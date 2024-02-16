@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:timesheet/screen/common/CommonWidgets.dart';
 import '../../controller/project_controller.dart';
 import '../../data/model/response/Task.dart';
 import '../../utils/app_constants.dart';
@@ -128,8 +129,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                 : _descController.text);
         Navigator.of(context).pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('There is no change')));
+        showAlertDialog(context, 'no_change'.tr, 'no_change_detail'.tr);
       }
     } else {
       if (_nameController.text.isNullOrBlank == false &&
@@ -138,8 +138,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
             _nameController.text, _codeController.text, _descController.text);
         Navigator.of(context).pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Finish all information')));
+        showAlertDialog(context, 'missing_info'.tr, 'missing_info_detail'.tr);
       }
     }
   }

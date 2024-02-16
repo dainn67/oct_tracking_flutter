@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:timesheet/controller/personnel_controller.dart';
 import 'package:timesheet/data/model/response/member.dart';
 import 'package:timesheet/screen/common/CommonFunction.dart';
+import 'package:timesheet/screen/common/CommonWidgets.dart';
 import 'package:timesheet/utils/app_constants.dart';
 import '../../utils/images.dart';
 
@@ -76,33 +77,7 @@ class _MemberDetailState extends State<MemberDetail> {
                       _buildTitle('email'.tr),
                       _buildTextField(context, widget.member.email, 'email',
                           Images.lock, _emailController),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildTitle('date_joined'.tr),
-                            Text(widget.member.dateJoin,
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.green)),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildTitle('code'.tr),
-                            Text(widget.member.code,
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.green)),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
+                      _buildFixedData(),
                       _buildDropdownButton(
                           'position'.tr, 'position', AppConstants.positionList),
                       _buildDropdownButton(
@@ -169,16 +144,54 @@ class _MemberDetailState extends State<MemberDetail> {
       Navigator.pop(context);
     } else {
       if(_emailController.text.isNotEmpty && !isEmailValid(_emailController.text)){
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Invalid email format')));
+        showAlertDialog(context, 'invalid_email'.tr, 'invalid_email_detail'.tr);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('There is no change')));
+        showAlertDialog(context, 'no_change'.tr, 'no_change_detail'.tr);
       }
     }
   }
 
   //Local utils
+  _buildFixedData(){
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey.shade200
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTitle('date_joined'.tr),
+                Text(widget.member.dateJoin,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.green)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTitle('code'.tr),
+                Text(widget.member.code,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.green)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   _buildTextField(BuildContext context, String? hint, String type,
       String imgPath, TextEditingController controller) {
     return Container(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:timesheet/controller/user_controller.dart';
 import 'package:timesheet/data/model/response/user.dart';
 import 'package:timesheet/screen/common/CommonFunction.dart';
+import 'package:timesheet/screen/common/CommonWidgets.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/images.dart';
 
@@ -152,17 +153,13 @@ class _UserDetailState extends State<UserDetail> {
     } else {
       if (_emailController.text.isNotEmpty &&
           !isEmailValid(_emailController.text)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Invalid email format')));
+        showAlertDialog(context, 'invalid_email'.tr, 'invalid_email_detail'.tr);
       } else if (_passwordController.text != _confirmPassController.text) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Wrong confirm password')));
+        showAlertDialog(context, 'unmatch_password'.tr, 'unmatch_password_detail'.tr);
       } else if (!roles.contains(true)) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Select roles')));
+        showAlertDialog(context, 'select_role'.tr, 'select_role_detail'.tr);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Fill in all fields')));
+        showAlertDialog(context, 'missing_info'.tr, 'missing_info_detail'.tr);
       }
     }
   }
@@ -172,7 +169,6 @@ class _UserDetailState extends State<UserDetail> {
     return StatefulBuilder(
       builder: (context, setState) => Wrap(children: [
         Container(
-          // width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
               color: Colors.grey.shade200,

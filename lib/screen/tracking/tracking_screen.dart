@@ -350,7 +350,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   _getCorrespondingDateColor(String date) {
     List<int> data = date.split('-').map((e) => int.parse(e)).toList();
-    DateTime dateTime = DateTime(data[0], data[1], data[2]);
+    DateTime dateTime = DateTime(data[2], data[1], data[0]);
     if (dateTime.weekday == 7 || dateTime.weekday == 6) {
       return Colors.red;
     } else {

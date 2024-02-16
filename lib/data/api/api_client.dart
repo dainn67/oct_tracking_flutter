@@ -219,7 +219,7 @@ class ApiClient extends GetxService {
       request: Request(
           headers: receivedResponse.request!.headers,
           method: receivedResponse.request!.method,
-          url: receivedResponse.request!.url),
+          url: receivedResponse.request!.url) ,
       headers: receivedResponse.headers,
       statusCode: receivedResponse.statusCode,
       statusText: receivedResponse.reasonPhrase,
