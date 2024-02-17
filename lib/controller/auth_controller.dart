@@ -1,11 +1,10 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:timesheet/data/model/body/user.dart';
 import 'package:timesheet/data/model/response/token_resposive.dart';
 import 'package:timesheet/data/repository/auth_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/model/response/work_day.dart';
 import '../helper/route_helper.dart';
 
 class AuthController extends GetxController implements GetxService {

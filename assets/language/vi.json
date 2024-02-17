@@ -393,6 +393,7 @@
   "week": "tuần",
   "day": "ngày",
   "hour": "giờ",
+  "hours": "Giờ",
   "product_images": "Hình ảnh Dịch vụ",
   "prescription": "Mặt bằng cần Setup",
   "are_you_sure_want_to_switch": "Bạn có chắc chắn muốn chuyển sang",
@@ -990,7 +991,6 @@
   "approximate_delivery_time": "Thời gian giao hàng",
   "minimum": "Tối thiểu",
   "maximum": "Tối đa",
-  "hours": "Giờ",
   "enter_minimum_delivery_time": "Nhập thời gian giao hàng tối thiểu",
   "enter_maximum_delivery_time": "Nhập thời gian giao hàng tối đa",
   "select_delivery_time_type": "Chọn loại thời gian giao hàng",
@@ -1048,5 +1048,7 @@
   "missing_info": "Không đủ thông tin",
   "missing_info_detail": "Bạn cần nhập đầy đủ thông tin",
   "unmatch_password": "Sai mật khẩu",
-  "unmatch_password_detail": "Xác nhận mật khẩu không khớp"
+  "unmatch_password_detail": "Xác nhận mật khẩu không khớp",
+  "select_role": "Thiếu vị trí",
+  "select_role_detail": "Chọn vị trí người dùng"
 }

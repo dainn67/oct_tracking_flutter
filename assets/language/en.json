@@ -394,6 +394,7 @@
   "week": "week",
   "day": "day",
   "hour": "hour",
+  "hours": "Hours",
   "product_images": "Services Images",
   "prescription": "Prescription",
   "are_you_sure_want_to_switch": "Are you sure want to switch at",
@@ -827,5 +828,7 @@
   "missing_info": "Missing information",
   "missing_info_detail": "Finish all required information",
   "unmatch_password": "Wrong confirm password",
-  "unmatch_password_detail": "Your password and confirm password not match"
+  "unmatch_password_detail": "Your password and confirm password not match",
+  "select_role": "Missing role",
+  "select_role_detail": "Select new user's role"
 }

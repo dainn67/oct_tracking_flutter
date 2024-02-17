@@ -11,5 +11,5 @@ ThemeData dark({Color color = const Color(0xFF54b46b)}) => ThemeData(
   hintColor: Color(0xFFbebebe),
   cardColor: Colors.black,
   colorScheme: ColorScheme.dark(primary: color, secondary: color),
-  textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(primary: color)),
+  // textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(primary: color)),
 );

@@ -18,7 +18,6 @@ ThemeData light({Color color = const Color(0xFF039D55)}) {
       )
     ),
     colorScheme: ColorScheme.light(primary: color, secondary: color),
-    textButtonTheme:
-        TextButtonThemeData(style: TextButton.styleFrom(primary: color)),
+    // textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(primary: color)),
   );
 }

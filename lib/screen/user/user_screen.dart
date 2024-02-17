@@ -170,8 +170,7 @@ class _UserScreenState extends State<UserScreen> {
             ),
             Center(
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.green, onPrimary: Colors.white),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
                     onPressed: () {
                       showDialog(
                           context: context,
