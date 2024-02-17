@@ -20,16 +20,16 @@ An application implemented using Flutter language and GetX library, connecting w
 
 ### Authentication screen
 
-<img src="https://github.com/dainn67/oct_intern_tracking_demo/blob/master/demo/authentication.jpg" alt="Authentication screen" width="280"/>
+<img src="https://github.com/dainn67/oct_tracking_flutter/blob/master/demo/authen.jpg" alt="Authentication screen" width="280"/>
 
 ### Tracking screen
-<img src="https://github.com/dainn67/oct_intern_tracking_demo/blob/master/demo/tracking.jpg" alt="Tracking screen" width="280"/>
+<img src="https://github.com/dainn67/oct_tracking_flutter/blob/master/demo/tracking.jpg" alt="Tracking screen" width="280"/>
 
 ### Project screen
-<img src="https://github.com/dainn67/oct_intern_tracking_demo/blob/master/demo/project.jpg" alt="Project screen" width="280"/>
+<img src="https://github.com/dainn67/oct_tracking_flutter/blob/master/demo/project.jpg" alt="Project screen" width="280"/>
 
 ### Member screen
-<img src="https://github.com/dainn67/oct_intern_tracking_demo/blob/master/demo/members.jpg" alt="Member screen" width="280"/>
+<img src="https://github.com/dainn67/oct_tracking_flutter/blob/master/demo/member.jpg" alt="Member screen" width="280"/>
 
 
 ## Access Credentials
