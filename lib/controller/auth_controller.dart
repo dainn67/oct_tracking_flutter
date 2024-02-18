@@ -28,7 +28,6 @@ class AuthController extends GetxController implements GetxService {
       if (kDebugMode) print('NEW ACCESS TOKEN: ${tokenBody.accessToken}');
       repo.saveUserToken(tokenBody.accessToken!);
     } else if (response.statusCode == 401) {
-      clearData();
       Get.offAllNamed(RouteHelper.getSignInRoute());
     }
 
@@ -38,22 +37,8 @@ class AuthController extends GetxController implements GetxService {
     return response.statusCode!;
   }
 
-  Future<int> logOut() async {
-    _loading = true;
-    update();
-
-    Response response = await repo.logOut();
-    if (response.statusCode == 200) {
-      repo.clearUserToken();
-    } else {
-      clearData();
-      Get.offAllNamed(RouteHelper.getSignInRoute());
-    }
-
-    _loading = false;
-    update();
-
-    return response.statusCode!;
+  Future<void> logOut() async {
+    await sharedPreferences.clear();
   }
 
   Future<int> checkToken() async {
@@ -63,10 +48,5 @@ class AuthController extends GetxController implements GetxService {
     } else {}
 
     return response.statusCode ?? 404;
-  }
-
-  void clearData() {
-    _loading = false;
-    update();
   }
 }

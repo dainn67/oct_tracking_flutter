@@ -8,6 +8,7 @@ import '../controller/tracking_controller.dart';
 import '../helper/route_helper.dart';
 import '../widgets/drawer.dart';
 import 'tracking/tracking_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -51,13 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void logOut() {
-    Get.find<AuthController>().logOut().then((value) => {
-          if (value == 200)
-            Get.offNamed(RouteHelper.signIn)
-          else
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text("Logged out")))
-        });
+    Get.find<AuthController>()
+        .logOut()
+        .then((_) => {Get.offAllNamed(RouteHelper.signIn)});
   }
 
   void changePage(String s) {
@@ -65,13 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
     title.value = s.tr;
     switch (s) {
       case 'tracking':
-          index.value = 0;
+        index.value = 0;
       case 'project':
-          index.value = 1;
+        index.value = 1;
       case 'personnel':
-          index.value = 2;
+        index.value = 2;
       case 'user':
-          index.value = 3;
+        index.value = 3;
     }
   }
 }

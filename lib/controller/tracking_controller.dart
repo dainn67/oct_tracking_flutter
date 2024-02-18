@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -59,6 +58,7 @@ class TrackingController extends GetxController implements GetxService {
     _selectedTeam = newTeamName;
     if(newTeamName == 'None') {
       _selectedTeamId = null;
+      _selectedMemberId = null;
     } else {
       _selectedTeamId = _teamList.firstWhere((element) => element.name == newTeamName).id;
     }
@@ -113,6 +113,7 @@ class TrackingController extends GetxController implements GetxService {
     _loading = true;
     update();
 
+    print('HERE: $_selectedTeamId - $_selectedMemberId');
     try {
       Response response = await repo.getWorkingDayList(
           _fromDate, _toDate, _pageIndex, _pageSize, teamId: _selectedTeamId, memberId: _selectedMemberId);

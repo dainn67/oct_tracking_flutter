@@ -25,7 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Opacity(
                   opacity: controller.loading ? 0.6 : 1,
                   child: Scaffold(
-                      appBar: buildAppBar("Sign in"),
+                      appBar: buildAppBar("sign_in".tr),
                       body: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

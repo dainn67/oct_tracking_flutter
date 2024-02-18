@@ -51,12 +51,12 @@ class _PersonnelScreenState extends State<PersonnelScreen> {
                                 ? controller.resetTeamOptions()
                                 : controller.resetMemberOptions();
                           },
-                          tabs: const [
+                          tabs: [
                             GButton(
                               icon: Icons.group,
-                              text: 'Team',
+                              text: 'team'.tr,
                             ),
-                            GButton(icon: Icons.man, text: 'Member')
+                            GButton(icon: Icons.man, text: 'member'.tr)
                           ]),
                     ),
                     if (controller.pageCategory == 1) _filterMemberBox(
